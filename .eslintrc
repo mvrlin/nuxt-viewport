@@ -1,0 +1,40 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+
+  "extends": [
+    "@nuxtjs/eslint-config-typescript",
+
+    "plugin:prettier-vue/recommended",
+    "plugin:nuxt/recommended"
+  ],
+
+  "root": true,
+
+  "rules": {
+    "@typescript-eslint/consistent-type-imports": "error",
+
+    "no-console": "off",
+    "require-await": "off",
+
+    "vue/attributes-order": ["error", {
+      "alphabetical": true
+    }],
+
+    "vue/max-attributes-per-line": ["error", {
+      "singleline": 3
+    }],
+
+    "vue/no-reserved-keys": "off"
+  },
+
+  "settings": {
+    "prettier-vue": {
+      "SFCBlocks": {
+        "template": false
+      }
+    }
+  }
+}
