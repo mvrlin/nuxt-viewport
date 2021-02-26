@@ -163,7 +163,7 @@ If using typescript or running typescript language server to check the code (for
 
 You can contribute to this module online with CodeSandBox:
 
-[![Edit nuxt-viewport](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/mvrlin/nuxt-viewport/tree/master/?fontsize=14&hidenavigation=1&theme=dark)
+[![Edit nuxt-viewport](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/mvrlin/nuxt-viewport/tree/main/?fontsize=14&hidenavigation=1&theme=dark)
 
 Or locally:
 
