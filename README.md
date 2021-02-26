@@ -134,6 +134,19 @@ Example for TailwindCSS.
 }
 ```
 
+## Typescript
+If using typescript or running typescript language server to check the code (for example through Vetur), add types to `types` array in your `tsconfig.json`:
+```json
+{
+  "compilerOptions": {
+    "types": [
+      "@nuxt/types",
+      "nuxt-viewport",
+    ]
+  }
+}
+```
+
 ## API
 
 - `$viewport.breakpoint` - Current breakpoint.
