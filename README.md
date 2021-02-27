@@ -65,6 +65,10 @@ using top level options
       [key: string]: number
     },
 
+    // Cookie name.
+    // Default: "viewport".
+    cookieName: string
+
     // Default breakpoints based on device type for auto detection.
     // Available devices: "console", "desktop", "embedded", "mobile", "smarttv", "tablet", "wearable".
     defaultBreakpoints: {
@@ -121,6 +125,8 @@ Example for TailwindCSS.
 
       tablet: 768,
     },
+
+    cookieName: 'viewport',
 
     defaultBreakpoints: {
       desktop: 'desktop',

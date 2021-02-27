@@ -15,7 +15,7 @@ const nuxtModule: NuxtModule<ViewportOptions> = function (customOptions) {
 
   const options = {
     ...DEFAULT_OPTIONS,
-    ...(customOptions || this.options.viewport || {}),
+    ...(this.options.viewport || customOptions || {}),
   }
 
   this.addPlugin({

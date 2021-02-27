@@ -47,6 +47,13 @@ export type ViewportOptions = {
   }
 
   /**
+   * Cookie name.
+   *
+   * Default: "viewport".
+   */
+  cookieName: string
+
+  /**
    * Default breakpoints based on device type for auto detection.
    *
    * Available devices: "console", "desktop", "embedded", "mobile", "smarttv", "tablet", "wearable".
@@ -93,6 +100,8 @@ export const DEFAULT_OPTIONS: ViewportOptions = {
     tablet: 768,
   },
 
+  cookieName: 'viewport',
+
   defaultBreakpoints: {
     desktop: 'desktop',
     mobile: 'mobile',
@@ -101,12 +110,6 @@ export const DEFAULT_OPTIONS: ViewportOptions = {
 
   fallbackBreakpoint: 'desktop',
 }
-
-/**
- * Viewport cookie.
- * @const
- */
-export const VIEWPORT_COOKIE = 'viewport'
 
 /**
  * Detects the breakpoint based on Cookie & User-Agent.
@@ -288,7 +291,7 @@ export function useViewport(options: ViewportOptions, breakpoint: string) {
       _setBreakpoint(breakpoint: string) {
         this.breakpoint = breakpoint
 
-        cookie.set(VIEWPORT_COOKIE, breakpoint, {
+        cookie.set(options.cookieName, breakpoint, {
           expires: 365,
           sameSite: 'strict',
         })
