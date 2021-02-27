@@ -15,7 +15,7 @@ const nuxtModule: NuxtModule<ViewportOptions> = function (customOptions) {
 
   const options = {
     ...DEFAULT_OPTIONS,
-    ...customOptions,
+    ...(customOptions || this.options.viewport || {}),
   }
 
   this.addPlugin({
@@ -63,5 +63,11 @@ declare module '@nuxt/types' {
   }
   interface NuxtAppOptions {
     $viewport: ViewportModule
+  }
+}
+
+declare module '@nuxt/types/config/index' {
+  interface NuxtOptions {
+    viewport: ViewportOptions
   }
 }
