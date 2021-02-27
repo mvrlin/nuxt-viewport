@@ -1,6 +1,6 @@
 {
   "name": "nuxt-viewport",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Define custom viewports for your Nuxt project",
   "keywords": [
     "nuxt",
