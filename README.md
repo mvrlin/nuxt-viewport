@@ -54,59 +54,65 @@ using top level options
 }
 ```
 
+
+## Usage with `@nuxtjs/composition-api`
+```js
+import { defineComponent, watch } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  setup(_, { root }) {
+    // Viewport module.
+    const viewport = root.$viewport
+
+    // Watch breakpoint for updates.
+    watch(() => viewport.breakpoint, (newBreakpoint, oldBreakpoint) => {
+      console.log('Breakpoint updated:', oldBreakpoint, '->', newBreakpoint)
+    })
+  },
+})
+```
+
+## Typescript
+If using typescript or running typescript language server to check the code (for example through Vetur), add types to `types` array in your `tsconfig.json`:
+```json
+{
+  "compilerOptions": {
+    "types": [
+      "@nuxt/types",
+      "nuxt-viewport",
+    ]
+  }
+}
+```
+
 ## Configuration
 
-```ts
-{
-  // ...
-  viewport: {
-    // Define your own breakpoints.
-    breakpoints: {
-      [key: string]: number
-    },
+### `breakpoints`
 
-    // Cookie name.
-    // Default: "viewport".
-    cookieName: string
+- Type: Object
 
-    // Default breakpoints based on device type for auto detection.
-    // Available devices: "console", "desktop", "embedded", "mobile", "smarttv", "tablet", "wearable".
-    defaultBreakpoints: {
-      [key: string]: string
-    },
+An object where the key is the name of the viewport, and the value is the viewport size.
 
-    // Breakpoint to fallback, if device was not detected.
-    fallbackBreakpoint: string
-  },
-  // ...
-}
-```
+### `cookieName`
 
-Example for TailwindCSS.
-```js
-{
-  // ...
-  viewport: {
-    breakpoints: {
-      xs: 320,
-      sm: 640,
-      md: 768,
-      lg: 1024,
-      xl: 1280,
-      '2xl': 1536,
-    },
+- Type: String
+- Default: `viewport`
 
-    defaultBreakpoints: {
-      desktop: 'lg',
-      mobile: 'xs',
-      tablet: 'md',
-    },
+The key for the document cookie.
 
-    fallbackBreakpoint: 'lg'
-  },
-  // ...
-}
-```
+### `defaultBreakpoints`
+
+- Type: Object
+- Detectable devices: `console`, `desktop`, `embedded`, `mobile`, `smarttv`, `tablet`, `wearable`
+
+An object where the key is the name of the detected device, and the value is the breakpoint key.
+
+### `fallbackBreakpoint`
+
+- Type: String
+- Default: `viewport`
+
+The breakpoint key to be used, if the device was not detected.
 
 ## Default configuration
 
@@ -140,30 +146,74 @@ Example for TailwindCSS.
 }
 ```
 
-## Typescript
-If using typescript or running typescript language server to check the code (for example through Vetur), add types to `types` array in your `tsconfig.json`:
-```json
+## Example configuration for Tailwind CSS
+```js
 {
-  "compilerOptions": {
-    "types": [
-      "@nuxt/types",
-      "nuxt-viewport",
-    ]
-  }
+  // ...
+  viewport: {
+    breakpoints: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      '2xl': 1536,
+    },
+
+    defaultBreakpoints: {
+      desktop: 'lg',
+      mobile: 'xs',
+      tablet: 'md',
+    },
+
+    fallbackBreakpoint: 'lg'
+  },
+  // ...
 }
 ```
 
 ## API
 
-- `$viewport.breakpoint` - Current breakpoint.
+### `$viewport.breakpoint`
+- Type: String
 
-- `$viewport.isGreaterThan(searchBreakpoint)` - Returns true, if searchBreakpoint is greater, than the current breakpoint.
+Current breakpoint.
 
-- `$viewport.isLessThan(searchBreakpoint)` - Returns true, if searchBreakpoint is less, than the current breakpoint.
+### `$viewport.isGreaterThan`
+- Type: Boolean
 
-- `$viewport.match(breakpointToMatch)` - Returns true if current breakpoint is matching the value.
+```js
+// Example: $viewport.breakpoint is "mobile".
+// Result: false.
+$viewport.isGreaterThan('desktop')
+```
 
-- `$viewport.matches(breakpointsToMatch)` - Returns true if current breakpoint is included in the values.
+### `$viewport.isLessThan`
+- Type: Boolean
+
+```js
+// Example: $viewport.breakpoint is "desktop".
+// Result: true.
+$viewport.isLessThan('desktopWide')
+```
+
+### `$viewport.match`
+- Type: Boolean
+
+```js
+// Example: $viewport.breakpoint is "tablet".
+// Result: true.
+$viewport.match('tablet')
+```
+
+### `$viewport.matches`
+- Type: Boolean
+
+```js
+// Example: $viewport.breakpoint is "mobileWide".
+// Result: true.
+$viewport.match('tablet', 'mobileWide')
+```
 
 ## Contributing
 
