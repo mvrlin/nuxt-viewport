@@ -212,7 +212,7 @@ $viewport.match('tablet')
 ```js
 // Example: $viewport.breakpoint is "mobileWide".
 // Result: true.
-$viewport.match('tablet', 'mobileWide')
+$viewport.matches('tablet', 'mobileWide')
 ```
 
 ## Contributing
