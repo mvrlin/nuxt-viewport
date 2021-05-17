@@ -57,12 +57,15 @@ using top level options
 
 ## Usage with `@nuxtjs/composition-api`
 ```js
-import { defineComponent, watch } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, watch } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  setup(_, { root }) {
+  setup() {
+    // Context.
+    const context = useContext()
+  
     // Viewport module.
-    const viewport = root.$viewport
+    const viewport = context.$viewport
 
     // Watch breakpoint for updates.
     watch(() => viewport.breakpoint, (newBreakpoint, oldBreakpoint) => {
