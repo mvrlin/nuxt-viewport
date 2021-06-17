@@ -5,13 +5,20 @@ import { detectBreakpoint, useViewport } from '~viewport'
  * @type {import('@nuxt/types').Plugin}
  */
 export default async function (ctx, inject) {
-  const { headers } = ctx.ssrContext.req
   const options = <%= serialize(options) %>
+  const { req = {} } = ctx.ssrContext
 
-  const requestCookies = cookie.parse(headers.cookie || '')
-  const cookieViewport = requestCookies[options.cookieName]
+  let cookieViewport = ''
+  let requestCookies = {}
+  let userAgent = ''
 
-  const breakpoint = await detectBreakpoint.call(options, cookieViewport, headers['user-agent'])
+  if (req.headers) {
+    requestCookies = cookie.parse(req.headers.cookie || '')
+    cookieViewport = requestCookies[options.cookieName]
+    userAgent = req.headers['user-agent']
+  }
+
+  const breakpoint = await detectBreakpoint.call(options, cookieViewport, userAgent)
   const viewport = useViewport(options, breakpoint)
 
   ctx.beforeNuxtRender(({ nuxtState }) => {
