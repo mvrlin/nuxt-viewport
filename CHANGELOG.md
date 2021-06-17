@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/mvrlin/nuxt-viewport/compare/v0.0.5...v0.0.6) (2021-06-17)
+
+
+### Bug Fixes
+
+* **runtime:** detect breakpoint only with headers ([cfa8719](https://github.com/mvrlin/nuxt-viewport/commit/cfa8719906d4416dce92ff4ab552e948c88c090b))
+
 ### [0.0.5](https://github.com/mvrlin/nuxt-viewport/compare/v0.0.4...v0.0.5) (2021-06-17)
 
 
