@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/mvrlin/nuxt-viewport/compare/v0.0.6...v0.0.7) (2021-09-01)
+
+
+### Bug Fixes
+
+* **runtime:** fix SSR hydration issue ([4905888](https://github.com/mvrlin/nuxt-viewport/commit/49058883ca864239420c71f3d93a871ffb39ef01))
+
 ### [0.0.6](https://github.com/mvrlin/nuxt-viewport/compare/v0.0.5...v0.0.6) (2021-06-17)
 
 
