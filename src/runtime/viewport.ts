@@ -242,45 +242,49 @@ export function useViewport(options: ViewportOptions, breakpoint: string) {
       },
     },
 
-    watch: {
-      _queries: {
-        deep: true,
+    created() {
+      if (process.server) {
+        return
+      }
 
-        handler(queries: { [key: string]: ViewportQuery }) {
-          if (process.server) {
-            return
-          }
+      /* eslint-disable nuxt/no-globals-in-created */
+      window.onNuxtReady(() => {
+        this.$watch(
+          '_queries',
+          (queries: Record<string, ViewportQuery>) => {
+            // Get queries keys.
+            const queriesKeys = Object.keys(queries)
 
-          // Get queries keys.
-          const queriesKeys = Object.keys(queries)
-
-          if (!queriesKeys.length) {
-            return
-          }
-
-          // Create an array of MediaQueryList.
-          const mediaQueryLists = queriesKeys.map((key) => window.matchMedia(queries[key].mediaQuery))
-
-          // Loop over mediaQueryLists and watch for changes.
-          return mediaQueryLists.forEach((mediaQueryList, key) => {
-            const newBreakpoint = queriesKeys[key]
-
-            if (mediaQueryList.matches) {
-              this._setBreakpoint(newBreakpoint)
+            if (!queriesKeys.length) {
+              return
             }
 
-            mediaQueryList.addEventListener('change', (event) => {
-              if (!event.matches) {
-                return
+            // Create an array of MediaQueryList.
+            const mediaQueryLists = queriesKeys.map((key) => window.matchMedia(queries[key].mediaQuery))
+
+            // Loop over mediaQueryLists and watch for changes.
+            return mediaQueryLists.forEach((mediaQueryList, key) => {
+              const newBreakpoint = queriesKeys[key]
+
+              if (mediaQueryList.matches) {
+                this._setBreakpoint(newBreakpoint)
               }
 
-              this._setBreakpoint(newBreakpoint)
-            })
-          })
-        },
+              mediaQueryList.addEventListener('change', (event) => {
+                if (!event.matches) {
+                  return
+                }
 
-        immediate: true,
-      },
+                this._setBreakpoint(newBreakpoint)
+              })
+            })
+          },
+          {
+            deep: true,
+            immediate: true,
+          },
+        )
+      })
     },
 
     methods: {
