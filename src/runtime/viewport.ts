@@ -156,15 +156,20 @@ export function useViewport(options: ViewportOptions, breakpoint: string) {
        */
       _queries() {
         const { breakpoints = {} } = options
-        const entries = Object.keys(breakpoints).sort((a, b) => breakpoints[a] - breakpoints[b])
+        const breakpointsKeys = Object.keys(breakpoints).sort((a, b) => breakpoints[a] - breakpoints[b])
 
-        return entries.reduceRight((acc: { [key: string]: ViewportQuery }, ref, index, array) => {
-          const size = breakpoints[ref]
-          const nextSize = breakpoints[array[index + 1]]
+        const queries: Record<string, ViewportQuery> = {}
+        let i = breakpointsKeys.length
+
+        while (i--) {
+          const currentKey = breakpointsKeys[i]
+
+          const size = breakpoints[currentKey]
+          const nextSize = breakpoints[breakpointsKeys[i + 1]]
 
           let mediaQuery = ''
 
-          if (index > 0) {
+          if (i > 0) {
             mediaQuery = `(min-width: ${size}px)`
           } else {
             mediaQuery = `(min-width: 1px)`
@@ -174,13 +179,13 @@ export function useViewport(options: ViewportOptions, breakpoint: string) {
             mediaQuery += ` and (max-width: ${nextSize - 1}px)`
           }
 
-          acc[ref] = {
+          queries[currentKey] = {
             mediaQuery,
             size,
           }
+        }
 
-          return acc
-        }, {})
+        return queries
       },
     },
 
@@ -191,41 +196,22 @@ export function useViewport(options: ViewportOptions, breakpoint: string) {
 
       /* eslint-disable nuxt/no-globals-in-created */
       window.onNuxtReady(() => {
-        this.$watch(
-          '_queries',
-          (queries: Record<string, ViewportQuery>) => {
-            // Get queries keys.
-            const queriesKeys = Object.keys(queries)
+        for (const queryKey in this._queries) {
+          const { mediaQuery } = this._queries[queryKey]
+          const mediaQueryList = window.matchMedia(mediaQuery)
 
-            if (!queriesKeys.length) {
+          if (mediaQueryList.matches) {
+            this._setBreakpoint(queryKey)
+          }
+
+          mediaQueryList.onchange = (event) => {
+            if (!event.matches) {
               return
             }
 
-            // Create an array of MediaQueryList.
-            const mediaQueryLists = queriesKeys.map((key) => window.matchMedia(queries[key].mediaQuery))
-
-            // Loop over mediaQueryLists and watch for changes.
-            return mediaQueryLists.forEach((mediaQueryList, key) => {
-              const newBreakpoint = queriesKeys[key]
-
-              if (mediaQueryList.matches) {
-                this._setBreakpoint(newBreakpoint)
-              }
-
-              mediaQueryList.addEventListener('change', (event) => {
-                if (!event.matches) {
-                  return
-                }
-
-                this._setBreakpoint(newBreakpoint)
-              })
-            })
-          },
-          {
-            deep: true,
-            immediate: true,
-          },
-        )
+            this._setBreakpoint(queryKey)
+          }
+        }
       })
     },
 
