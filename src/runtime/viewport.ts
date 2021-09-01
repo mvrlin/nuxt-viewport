@@ -182,64 +182,6 @@ export function useViewport(options: ViewportOptions, breakpoint: string) {
           return acc
         }, {})
       },
-
-      /**
-       * Returns true, if searchBreakpoint is greater, than the current breakpoint.
-       * @param searchBreakpoint - Breakpoint to search.
-       */
-      isGreaterThan() {
-        const keys = Object.keys(this._queries)
-        const currentIndex = keys.indexOf(this.breakpoint)
-
-        return (searchBreakpoint: string) => {
-          const breakpointIndex = keys.indexOf(searchBreakpoint)
-
-          if (breakpointIndex === -1) {
-            return false
-          }
-
-          return breakpointIndex > currentIndex
-        }
-      },
-
-      /**
-       * Returns true, if searchBreakpoint is less, than the current breakpoint.
-       * @param searchBreakpoint - Breakpoint to search.
-       */
-      isLessThan() {
-        const keys = Object.keys(this._queries)
-        const currentIndex = keys.indexOf(this.breakpoint)
-
-        return (searchBreakpoint: string) => {
-          const breakpointIndex = keys.indexOf(searchBreakpoint)
-
-          if (breakpointIndex === -1) {
-            return false
-          }
-
-          return breakpointIndex < currentIndex
-        }
-      },
-
-      /**
-       * Returns true if current breakpoint is matching the value.
-       * @param breakpointToMatch - Breakpoint value to match.
-       */
-      match() {
-        return (breakpointToMatch: string) => {
-          return this.breakpoint === breakpointToMatch
-        }
-      },
-
-      /**
-       * Returns true if current breakpoint is included in the values.
-       * @param breakpointsToMatch - Breakpoints to match.
-       */
-      matches() {
-        return (...breakpointsToMatch: string[]) => {
-          return breakpointsToMatch.includes(this.breakpoint)
-        }
-      },
     },
 
     created() {
@@ -299,6 +241,56 @@ export function useViewport(options: ViewportOptions, breakpoint: string) {
           expires: 365,
           sameSite: 'strict',
         })
+      },
+
+      /**
+       * Returns true, if searchBreakpoint is greater, than the current breakpoint.
+       * @param searchBreakpoint - Breakpoint to search.
+       */
+      isGreaterThan(searchBreakpoint: string) {
+        const keys = Object.keys(this._queries)
+        const currentIndex = keys.indexOf(this.breakpoint)
+
+        const breakpointIndex = keys.indexOf(searchBreakpoint)
+
+        if (breakpointIndex === -1) {
+          return false
+        }
+
+        return breakpointIndex > currentIndex
+      },
+
+      /**
+       * Returns true, if searchBreakpoint is less, than the current breakpoint.
+       * @param searchBreakpoint - Breakpoint to search.
+       */
+      isLessThan(searchBreakpoint: string) {
+        const keys = Object.keys(this._queries)
+        const currentIndex = keys.indexOf(this.breakpoint)
+
+        const breakpointIndex = keys.indexOf(searchBreakpoint)
+
+        if (breakpointIndex === -1) {
+          return false
+        }
+
+        return breakpointIndex < currentIndex
+      },
+
+      /**
+       * Returns true if current breakpoint is matching the value.
+       * @param breakpointToMatch - Breakpoint value to match.
+       */
+      match(breakpointToMatch: string) {
+        return this.breakpoint === breakpointToMatch
+      },
+
+      /**
+       * Returns true if current breakpoint is included in the values.
+       * @param breakpointsToMatch - Breakpoints to match.
+       */
+      matches(...breakpointsToMatch: string[]) {
+        return breakpointsToMatch.includes(this.breakpoint)
       },
     },
   })
