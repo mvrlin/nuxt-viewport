@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0](https://github.com/mvrlin/nuxt-viewport/compare/v0.0.7...v0.1.0) (2021-12-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* migrate to nuxt bridge
+
+### Features
+
+* migrate to nuxt bridge ([a305f35](https://github.com/mvrlin/nuxt-viewport/commit/a305f3520129c46b26c56e1d2e75cd59145759c1))
+
+
+### Bug Fixes
+
+* **lint:** fix eslint errors ([a9bfe14](https://github.com/mvrlin/nuxt-viewport/commit/a9bfe147335d1eed0f2627b8e6580a4797101180))
+
 ### [0.0.7](https://github.com/mvrlin/nuxt-viewport/compare/v0.0.6...v0.0.7) (2021-09-01)
 
 
