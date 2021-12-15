@@ -187,8 +187,19 @@ Current breakpoint.
 
 ```js
 // Example: $viewport.breakpoint is "mobile".
-// Result: false.
-$viewport.isGreaterThan('desktop')
+
+$viewport.isGreaterThan('mobile') // Result: false.
+$viewport.isGreaterThan('desktop') // Result: false.
+```
+
+### `$viewport.isGreaterOrEquals`
+- Type: Boolean
+
+```js
+// Example: $viewport.breakpoint is "mobile".
+
+$viewport.isGreaterOrEquals('mobile') // Result: true.
+$viewport.isGreaterOrEquals('desktop') // Result: false.
 ```
 
 ### `$viewport.isLessThan`
@@ -196,8 +207,9 @@ $viewport.isGreaterThan('desktop')
 
 ```js
 // Example: $viewport.breakpoint is "desktop".
-// Result: true.
-$viewport.isLessThan('desktopWide')
+
+$viewport.isLessThan('desktopWide') // Result: true.
+$viewport.isLessThan('mobile') // Result: false.
 ```
 
 ### `$viewport.match`
@@ -205,8 +217,9 @@ $viewport.isLessThan('desktopWide')
 
 ```js
 // Example: $viewport.breakpoint is "tablet".
-// Result: true.
-$viewport.match('tablet')
+
+$viewport.match('tablet') // Result: true.
+$viewport.match('desktop') // Result: false.
 ```
 
 ### `$viewport.matches`
@@ -214,8 +227,9 @@ $viewport.match('tablet')
 
 ```js
 // Example: $viewport.breakpoint is "mobileWide".
-// Result: true.
-$viewport.matches('tablet', 'mobileWide')
+
+$viewport.matches('tablet', 'mobileWide') // Result: true.
+$viewport.matches('mobile', 'tablet') // Result: false.
 ```
 
 ## Contributing

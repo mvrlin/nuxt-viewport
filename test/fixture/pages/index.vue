@@ -1,9 +1,20 @@
 <template>
   <section>
-    Your current breakpoint is: <pre>{{ $viewport.breakpoint }}</pre>
+    <p>
+      Your current breakpoint is: <b>{{ $viewport.breakpoint }}</b>
+    </p>
 
-    <pre>{{ $viewport.isLessThan('desktop') }}</pre>
-    <pre>{{ $viewport.isGreaterThan('desktop') }}</pre>
+    <template v-for="breakpoint in ['mobile', 'tablet', 'desktop']">
+      <hr>
+
+      <h4>{{ breakpoint }}</h4>
+
+      <p><code>match</code> --> <b>{{ $viewport.match(breakpoint) }}</b></p>
+      <p><code>isLessThan</code> --> <b>{{ $viewport.isLessThan(breakpoint) }}</b></p>
+      <p><code>isGreaterThan</code> --> <b>{{ $viewport.isGreaterThan(breakpoint) }}</b></p>
+      <p><code>isGreaterOrEquals</code> --> <b>{{ $viewport.isGreaterOrEquals(breakpoint) }}</b></p>
+    </template>
+
   </section>
 </template>
 
@@ -16,3 +27,52 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html {
+    font-family: sans-serif;
+    font-size: 120%;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  section {
+    max-width: calc(100vw - 1rem);
+    background: #eee;
+    padding: 2rem;
+    border-radius: 1rem;
+  }
+
+  hr {
+    display: block;
+    border: none;
+    border-top: .1rem dashed #ccc;
+    margin: 1rem auto;
+  }
+
+  p {
+    margin: .5rem 0;
+  }
+
+  h4 {
+    text-decoration: underline;
+  }
+
+  code {
+    display: inline-block;
+    padding: .25em .35rem;
+    background: #ccc;
+    border-radius: .25rem;
+  }
+</style>

@@ -11,10 +11,16 @@ export type ViewportModule = {
   readonly breakpoint: string
 
   /**
-   * Returns true, if searchBreakpoint is greater, than the current breakpoint.
+   * Returns true, if searchBreakpoint is strictly greater than the current breakpoint.
    * @param searchBreakpoint - Breakpoint to search.
    */
   isGreaterThan: (searchBreakpoint: string) => Boolean
+
+  /**
+   * Returns true, if searchBreakpoint is greater or equals the current breakpoint.
+   * @param searchBreakpoint - Breakpoint to search.
+   */
+  isGreaterOrEquals: (searchBreakpoint: string) => Boolean
 
   /**
    * Returns true, if searchBreakpoint is less, than the current breakpoint.
@@ -230,7 +236,7 @@ export function useViewport(options: ViewportOptions, breakpoint: string) {
       },
 
       /**
-       * Returns true, if searchBreakpoint is greater, than the current breakpoint.
+       * Returns true, if searchBreakpoint is strictly greater than the current breakpoint.
        * @param searchBreakpoint - Breakpoint to search.
        */
       isGreaterThan(searchBreakpoint: string) {
@@ -244,6 +250,14 @@ export function useViewport(options: ViewportOptions, breakpoint: string) {
         }
 
         return breakpointIndex > currentIndex
+      },
+
+      /**
+       * Returns true, if searchBreakpoint is greater or equals the current breakpoint.
+       * @param searchBreakpoint - Breakpoint to search.
+       */
+      isGreaterOrEquals(searchBreakpoint: string) {
+        return this.isGreaterThan(searchBreakpoint) || this.match(searchBreakpoint)
       },
 
       /**
