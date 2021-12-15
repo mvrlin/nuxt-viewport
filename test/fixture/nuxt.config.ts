@@ -1,6 +1,5 @@
-import type { NuxtConfig } from '@nuxt/types'
+import { defineNuxtConfig } from '@nuxt/bridge'
 
-export default {
-  buildModules: ['@nuxt/typescript-build', '@nuxtjs/composition-api'],
+export default defineNuxtConfig({
   modules: ['../../src'],
-} as NuxtConfig
+})

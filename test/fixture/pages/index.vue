@@ -16,19 +16,8 @@
         <p><code>isGreaterOrEquals</code> → <b>{{ $viewport.isGreaterOrEquals(breakpoint) }}</b></p>
       </div>
     </template>
-
   </section>
 </template>
-
-<script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-
-export default defineComponent({
-  setup() {
-    return {}
-  },
-})
-</script>
 
 <style>
 * {
