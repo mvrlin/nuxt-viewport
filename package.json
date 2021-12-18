@@ -56,7 +56,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-prettier-vue": "^3.1.0",
     "husky": "^7.0.4",
-    "mkdist": "^0.3.8",
+    "mkdist": "0.1.1",
     "nuxt-edge": "2.16.0-27325455.c1d02ea3",
     "prettier": "^2.5.1",
     "siroc": "^0.16.0",
