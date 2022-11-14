@@ -6,7 +6,7 @@
 [![Codecov][codecov-src]][codecov-href]
 [![License][license-src]][license-href]
 
-> Define custom viewports for your [Nuxt](https://nuxtjs.org)️ project
+> Define custom viewports for your [Nuxt](https://v3.nuxtjs.org/)️ project
 
 ## Features
 
@@ -14,6 +14,9 @@
 - 🕶&nbsp; Auto detects the device viewport from Cookie & User-Agent
 - 👌&nbsp; Zero configuration to start
 - 👴️&nbsp; Supports IE9+
+
+> **Note**\
+> This version is Nuxt 3 & Nuxt Bridge only. For Nuxt 2 see [1.0.1](https://www.npmjs.com/package/nuxt-viewport/v/1.0.1)
 
 ## Quick Setup
 
@@ -54,38 +57,59 @@ using top level options
 }
 ```
 
+## Usage
+```vue
+<script setup>
+import { useNuxtApp } from '#app'
+const { $viewport } = useNuxtApp()
 
-## Usage with `@nuxtjs/composition-api`
-```js
-import { defineComponent, useContext, watch } from '@nuxtjs/composition-api'
-
-export default defineComponent({
-  setup() {
-    // Context.
-    const context = useContext()
-  
-    // Viewport module.
-    const viewport = context.$viewport
-
-    // Watch breakpoint for updates.
-    watch(() => viewport.breakpoint, (newBreakpoint, oldBreakpoint) => {
-      console.log('Breakpoint updated:', oldBreakpoint, '->', newBreakpoint)
-    })
-  },
+watch($viewport.breakpoint, (newBreakpoint, oldBreakpoint) => {
+  console.log('Breakpoint updated:', oldBreakpoint, '->', newBreakpoint)
 })
+</script>
+
+<template>
+  <div>
+    <div v-if="$viewport.isLessThan('tablet')">Should render only on mobile</div>
+    <div v-else>Current breakpoint: {{ $viewport.breakpoint }}</div>
+  </div>
+</template>
 ```
 
-## Typescript
-If using typescript or running typescript language server to check the code (for example through Vetur), add types to `types` array in your `tsconfig.json`:
-```json
-{
-  "compilerOptions": {
-    "types": [
-      "@nuxt/types",
-      "nuxt-viewport",
-    ]
-  }
-}
+## Usage with composable
+```vue
+<script setup>
+const viewport = useViewport()
+
+watch(viewport.breakpoint, (newBreakpoint, oldBreakpoint) => {
+  console.log('Breakpoint updated:', oldBreakpoint, '->', newBreakpoint)
+})
+</script>
+
+<template>
+  <div>
+    <div v-if="viewport.isLessThan('tablet')">Should render only on mobile</div>
+    <div v-else>Current breakpoint: {{ viewport.breakpoint }}</div>
+  </div>
+</template>
+```
+
+## Usage with "@nuxt/bridge"
+```vue
+<script setup>
+const viewport = useViewport()
+
+watch(viewport.breakpoint, (newBreakpoint, oldBreakpoint) => {
+  console.log('Breakpoint updated:', oldBreakpoint, '->', newBreakpoint)
+})
+</script>
+
+<template>
+  <div>
+    <div v-if="viewport.isLessThan('tablet')">Should render only on mobile</div>
+    <div v-else>Current breakpoint: {{ $viewport.breakpoint }}</div>
+  </div>
+</template>
 ```
 
 ## Configuration
@@ -177,60 +201,65 @@ The breakpoint key to be used, if the device was not detected.
 
 ## API
 
-### `$viewport.breakpoint`
+### `viewport.breakpoint`
 - Type: String
 
 Current breakpoint.
 
-### `$viewport.isGreaterThan`
+### `viewport.isGreaterThan`
 - Type: Boolean
 
 ```js
-// Example: $viewport.breakpoint is "mobile".
+// Example: viewport.breakpoint is "mobile".
 
-$viewport.isGreaterThan('mobile') // Result: false.
-$viewport.isGreaterThan('desktop') // Result: false.
+viewport.isGreaterThan('mobile') // Result: false.
+viewport.isGreaterThan('desktop') // Result: false.
 ```
 
-### `$viewport.isGreaterOrEquals`
+### `viewport.isGreaterOrEquals`
 - Type: Boolean
 
 ```js
-// Example: $viewport.breakpoint is "mobile".
+// Example: viewport.breakpoint is "mobile".
 
-$viewport.isGreaterOrEquals('mobile') // Result: true.
-$viewport.isGreaterOrEquals('desktop') // Result: false.
+viewport.isGreaterOrEquals('mobile') // Result: true.
+viewport.isGreaterOrEquals('desktop') // Result: false.
 ```
 
-### `$viewport.isLessThan`
+### `viewport.isLessThan`
 - Type: Boolean
 
 ```js
-// Example: $viewport.breakpoint is "desktop".
+// Example: viewport.breakpoint is "desktop".
 
-$viewport.isLessThan('desktopWide') // Result: true.
-$viewport.isLessThan('mobile') // Result: false.
+viewport.isLessThan('desktopWide') // Result: true.
+viewport.isLessThan('mobile') // Result: false.
 ```
 
-### `$viewport.match`
+### `viewport.match`
 - Type: Boolean
 
 ```js
-// Example: $viewport.breakpoint is "tablet".
+// Example: viewport.breakpoint is "tablet".
 
-$viewport.match('tablet') // Result: true.
-$viewport.match('desktop') // Result: false.
+viewport.match('tablet') // Result: true.
+viewport.match('desktop') // Result: false.
 ```
 
-### `$viewport.matches`
+### `viewport.matches`
 - Type: Boolean
 
 ```js
-// Example: $viewport.breakpoint is "mobileWide".
+// Example: viewport.breakpoint is "mobileWide".
 
-$viewport.matches('tablet', 'mobileWide') // Result: true.
-$viewport.matches('mobile', 'tablet') // Result: false.
+viewport.matches('tablet', 'mobileWide') // Result: true.
+viewport.matches('mobile', 'tablet') // Result: false.
 ```
+
+### `viewport.queries`
+- Type: Object
+
+Object with generated media queries.
 
 ## Contributing
 

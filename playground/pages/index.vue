@@ -4,18 +4,24 @@
       Your current breakpoint is: <b>{{ $viewport.breakpoint }}</b>
     </p>
 
-    <template v-for="breakpoint in ['mobile', 'tablet', 'desktop']">
-      <div :key="breakpoint">
-        <hr>
+    <div v-for="breakpoint in ['mobile', 'tablet', 'desktop']" :key="breakpoint">
+      <hr />
 
-        <h4>{{ breakpoint }}</h4>
+      <h4>{{ breakpoint }}</h4>
 
-        <p><code>match</code> → <b>{{ $viewport.match(breakpoint) }}</b></p>
-        <p><code>isLessThan</code> → <b>{{ $viewport.isLessThan(breakpoint) }}</b></p>
-        <p><code>isGreaterThan</code> → <b>{{ $viewport.isGreaterThan(breakpoint) }}</b></p>
-        <p><code>isGreaterOrEquals</code> → <b>{{ $viewport.isGreaterOrEquals(breakpoint) }}</b></p>
-      </div>
-    </template>
+      <p>
+        <code>match</code> → <b>{{ $viewport.match(breakpoint) }}</b>
+      </p>
+      <p>
+        <code>isLessThan</code> → <b>{{ $viewport.isLessThan(breakpoint) }}</b>
+      </p>
+      <p>
+        <code>isGreaterThan</code> → <b>{{ $viewport.isGreaterThan(breakpoint) }}</b>
+      </p>
+      <p>
+        <code>isGreaterOrEquals</code> → <b>{{ $viewport.isGreaterOrEquals(breakpoint) }}</b>
+      </p>
+    </div>
   </section>
 </template>
 

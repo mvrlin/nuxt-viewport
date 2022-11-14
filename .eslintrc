@@ -1,23 +1,13 @@
 {
-  "env": {
-    "browser": true,
-    "node": true
-  },
-
   "extends": [
     "@nuxtjs/eslint-config-typescript",
-
-    "plugin:prettier-vue/recommended",
-    "plugin:nuxt/recommended"
+    "plugin:prettier-vue/recommended"
   ],
-
-  "root": true,
-
   "rules": {
-    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/no-unused-vars": "off",
 
     "no-console": "off",
-    "require-await": "off",
+    "space-before-function-paren": "off",
 
     "vue/attributes-order": ["error", {
       "alphabetical": true
@@ -29,13 +19,5 @@
 
     "vue/multi-word-component-names": "off",
     "vue/no-reserved-keys": "off"
-  },
-
-  "settings": {
-    "prettier-vue": {
-      "SFCBlocks": {
-        "template": false
-      }
-    }
   }
 }

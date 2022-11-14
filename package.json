@@ -1,7 +1,8 @@
 {
   "name": "nuxt-viewport",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Define custom viewports for your Nuxt project",
+  "type": "module",
   "keywords": [
     "nuxt",
     "module",
@@ -21,49 +22,38 @@
     "name": "Igor Talpa (mvrlin)",
     "email": "mvrlin@pm.me"
   },
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
+    }
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
   "files": [
-    "lib"
+    "dist"
   ],
   "scripts": {
-    "build": "siroc build && mkdist --src src/runtime --dist lib/runtime",
-    "dev": "nuxi dev test/fixture",
-    "lint": "eslint --ext .ts,.vue --ignore-path .gitignore .",
-    "release": "yarn build && standard-version && git push --follow-tags && npm publish"
+    "build": "nuxt-module-build",
+    "dev": "nuxi dev playground",
+    "dev:build": "nuxi build playground",
+    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground"
   },
   "dependencies": {
-    "cookie": "^0.4.1",
-    "js-cookie": "^3.0.1",
-    "ua-parser-js": "^1.0.2"
+    "@nuxt/kit": "^3.0.0-rc.13",
+    "ua-parser-js": "^1.0.32",
+    "vue-demi": "^0.13.11"
   },
   "devDependencies": {
-    "@nuxt/bridge": "npm:@nuxt/bridge-edge",
-    "@nuxt/types": "^2.15.8",
-    "@nuxt/typescript-build": "^2.1.0",
-    "@nuxt/typescript-runtime": "^2.1.0",
-    "@nuxt/vue-app": "^2.15.8",
-    "@nuxtjs/eslint-config": "^8.0.0",
-    "@nuxtjs/eslint-config-typescript": "^8.0.0",
-    "@types/cookie": "^0.4.1",
-    "@types/js-cookie": "^3.0.1",
-    "@types/node": "^16.11.13",
+    "@nuxt/module-builder": "^0.2.0",
+    "@nuxt/schema": "^3.0.0-rc.13",
+    "@nuxtjs/eslint-config-typescript": "^11.0.0",
     "@types/ua-parser-js": "^0.7.36",
-    "@vuedx/typescript-plugin-vue": "^0.7.4",
-    "eslint": "^8.4.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-nuxt": "^3.1.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-prettier-vue": "^3.1.0",
-    "husky": "^7.0.4",
-    "mkdist": "0.1.1",
-    "nuxt-edge": "2.16.0-27325455.c1d02ea3",
-    "prettier": "^2.5.1",
-    "siroc": "^0.16.0",
-    "standard-version": "^9.3.2",
-    "typescript": "^4.5.4"
-  },
-  "publishConfig": {
-    "access": "public"
+    "eslint": "^8.26.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-prettier-vue": "^4.2.0",
+    "nuxt": "^3.0.0-rc.13",
+    "prettier": "^2.7.1"
   }
 }
