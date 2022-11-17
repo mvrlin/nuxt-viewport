@@ -6,7 +6,9 @@ import { name, version } from '../package.json'
 import { DEFAULT_OPTIONS } from './runtime/manager'
 import type { ViewportOptions } from './runtime/types'
 
-export default defineNuxtModule<ViewportOptions>({
+export type ModuleOptions = ViewportOptions
+
+export default defineNuxtModule<ModuleOptions>({
   defaults: DEFAULT_OPTIONS,
 
   meta: {
