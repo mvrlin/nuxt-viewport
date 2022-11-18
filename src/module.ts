@@ -9,8 +9,6 @@ import type { ViewportOptions } from './runtime/types'
 export type ModuleOptions = ViewportOptions
 
 export default defineNuxtModule<ModuleOptions>({
-  defaults: DEFAULT_OPTIONS,
-
   meta: {
     configKey: 'viewport',
 
@@ -23,6 +21,11 @@ export default defineNuxtModule<ModuleOptions>({
   },
 
   setup(options, nuxt) {
+    options = {
+      ...DEFAULT_OPTIONS,
+      ...options,
+    }
+
     const { resolve } = createResolver(import.meta.url)
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
 
