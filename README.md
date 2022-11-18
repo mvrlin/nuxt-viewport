@@ -2,8 +2,6 @@
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
-[![Github Actions CI][github-actions-ci-src]][github-actions-ci-href]
-[![Codecov][codecov-src]][codecov-href]
 [![License][license-src]][license-href]
 
 > Define custom viewports for your [Nuxt](https://v3.nuxtjs.org/)️ project
@@ -280,17 +278,11 @@ Or locally:
 Copyright (c) mvrlin mvrlin@pm.me
 
 <!-- Badges -->
-[npm-version-src]: https://img.shields.io/npm/v/nuxt-viewport/latest.svg
+[npm-version-src]: https://img.shields.io/npm/v/nuxt-viewport/latest.svg?style=for-the-badge
 [npm-version-href]: https://npmjs.com/package/nuxt-viewport
 
-[npm-downloads-src]: https://img.shields.io/npm/dt/nuxt-viewport.svg
+[npm-downloads-src]: https://img.shields.io/npm/dt/nuxt-viewport.svg?style=for-the-badge
 [npm-downloads-href]: https://npmjs.com/package/nuxt-viewport
 
-[github-actions-ci-src]: https://github.com/mvrlin/nuxt-viewport/workflows/ci/badge.svg
-[github-actions-ci-href]: https://github.com/mvrlin/nuxt-viewport/actions?query=workflow%3Aci
-
-[codecov-src]: https://img.shields.io/codecov/c/github/mvrlin/nuxt-viewport.svg
-[codecov-href]: https://codecov.io/gh/mvrlin/nuxt-viewport
-
-[license-src]: https://img.shields.io/npm/l/nuxt-viewport.svg
+[license-src]: https://img.shields.io/npm/l/nuxt-viewport.svg?style=for-the-badge
 [license-href]: https://npmjs.com/package/nuxt-viewport
