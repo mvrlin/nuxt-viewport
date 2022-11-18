@@ -9,26 +9,24 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   const manager = createViewportManager(viewportOptions, state)
 
   // Watch and handle media queries on client.
-  if (typeof window !== 'undefined') {
-    nuxtApp.hook('app:mounted', () => {
-      for (const queryKey in manager.queries.value) {
-        const { mediaQuery } = manager.queries.value[queryKey]
-        const mediaQueryList = window.matchMedia(mediaQuery)
+  nuxtApp.hook('app:mounted', () => {
+    for (const queryKey in manager.queries.value) {
+      const { mediaQuery } = manager.queries.value[queryKey]
+      const mediaQueryList = window.matchMedia(mediaQuery)
 
-        if (mediaQueryList.matches) {
-          manager.breakpoint.value = queryKey
-        }
-
-        mediaQueryList.onchange = (event) => {
-          if (!event.matches) {
-            return
-          }
-
-          manager.breakpoint.value = queryKey
-        }
+      if (mediaQueryList.matches) {
+        manager.breakpoint.value = queryKey
       }
-    })
-  }
+
+      mediaQueryList.onchange = (event) => {
+        if (!event.matches) {
+          return
+        }
+
+        manager.breakpoint.value = queryKey
+      }
+    }
+  })
 
   // Don't detect viewport, if we have an initial value.
   if (state.value) {
