@@ -78,7 +78,7 @@ export function createViewportManager(options: ViewportOptions, state: Ref<strin
         const date = new Date()
         date.setTime(date.getTime() + COOKIE_EXPIRES_IN_DAYS)
 
-        document.cookie = `${options.cookieName}=${state.value}; SameSite=Strict; Secure; Expires=${date.toUTCString()}`
+        document.cookie = `${options.cookieName}=${state.value}; SameSite=Strict; Secure; Expires=${date.toUTCString()}; Path=/`
       }
     },
   })
