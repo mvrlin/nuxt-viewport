@@ -32,6 +32,23 @@ export const DEFAULT_OPTIONS: ViewportOptions = {
 export const STATE_KEY = 'viewportState'
 
 export function createViewportManager(options: ViewportOptions, state: Ref<string>) {
+  const breakpoint = computed<string>({
+    get() {
+      return state.value || options.fallbackBreakpoint
+    },
+
+    set(newBreakpoint) {
+      state.value = newBreakpoint
+
+      if (options.cookieName && typeof window !== 'undefined') {
+        const date = new Date()
+        date.setTime(date.getTime() + COOKIE_EXPIRES_IN_DAYS)
+
+        document.cookie = `${options.cookieName}=${state.value}; SameSite=Strict; Secure; Expires=${date.toUTCString()}; Path=/`
+      }
+    },
+  })
+
   const queries = computed<Record<string, ViewportQuery>>(() => {
     const breakpoints = options.breakpoints || {}
     const breakpointsKeys = Object.keys(breakpoints).sort((a, b) => breakpoints[a] - breakpoints[b])
@@ -66,22 +83,7 @@ export function createViewportManager(options: ViewportOptions, state: Ref<strin
     return output
   })
 
-  const breakpoint = computed<string>({
-    get() {
-      return state.value || options.fallbackBreakpoint
-    },
-
-    set(newBreakpoint) {
-      state.value = newBreakpoint
-
-      if (options.cookieName && typeof window !== 'undefined') {
-        const date = new Date()
-        date.setTime(date.getTime() + COOKIE_EXPIRES_IN_DAYS)
-
-        document.cookie = `${options.cookieName}=${state.value}; SameSite=Strict; Secure; Expires=${date.toUTCString()}; Path=/`
-      }
-    },
-  })
+  const queriesKeys = computed(() => Object.keys(queries.value))
 
   return {
     breakpoint,
@@ -102,10 +104,8 @@ export function createViewportManager(options: ViewportOptions, state: Ref<strin
    * @param searchBreakpoint - Breakpoint to search.
    */
   function isGreaterThan(searchBreakpoint: string) {
-    const keys = Object.keys(queries.value)
-    const currentIndex = keys.indexOf(breakpoint.value)
-
-    const breakpointIndex = keys.indexOf(searchBreakpoint)
+    const currentIndex = queriesKeys.value.indexOf(breakpoint.value)
+    const breakpointIndex = queriesKeys.value.indexOf(searchBreakpoint)
 
     if (breakpointIndex === -1) {
       return false
@@ -127,10 +127,8 @@ export function createViewportManager(options: ViewportOptions, state: Ref<strin
    * @param searchBreakpoint - Breakpoint to search.
    */
   function isLessThan(searchBreakpoint: string) {
-    const keys = Object.keys(queries.value)
-    const currentIndex = keys.indexOf(breakpoint.value)
-
-    const breakpointIndex = keys.indexOf(searchBreakpoint)
+    const currentIndex = queriesKeys.value.indexOf(breakpoint.value)
+    const breakpointIndex = queriesKeys.value.indexOf(searchBreakpoint)
 
     if (breakpointIndex === -1) {
       return false
