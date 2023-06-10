@@ -12,9 +12,7 @@ export type ViewportOptions = {
   /**
    * Breakpoints.
    */
-  breakpoints: {
-    [key: string]: number
-  }
+  breakpoints: Record<string, number>
 
   /**
    * Cookie name.
@@ -28,9 +26,7 @@ export type ViewportOptions = {
    *
    * Available devices: "console", "desktop", "embedded", "mobile", "smarttv", "tablet", "wearable".
    */
-  defaultBreakpoints: {
-    [key: string]: string
-  }
+  defaultBreakpoints: Record<string, string>
 
   /**
    * Fallback breakpoint.
