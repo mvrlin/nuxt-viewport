@@ -1,6 +1,10 @@
 <template>
   <section>
     <p>
+      Your value of breakpoint {{ $viewport.breakpoint.value }} is:
+      <b>{{ $viewport.breakpointValue($viewport.breakpoint.value) }}</b>
+    </p>
+    <p>
       Your current breakpoint is: <b>{{ $viewport.breakpoint }}</b>
     </p>
 

@@ -87,6 +87,7 @@ export function createViewportManager(options: ViewportOptions, state: Ref<strin
 
   return {
     breakpoint,
+    breakpointValue,
 
     isGreaterThan,
     isGreaterOrEquals,
@@ -97,6 +98,16 @@ export function createViewportManager(options: ViewportOptions, state: Ref<strin
     matches,
 
     queries,
+  }
+
+  /**
+   * Returns size by breakpoint name or undefined, if name is invalid.
+   * @param searchBreakpoint - Breakpoint to search.
+   */
+  function breakpointValue(searchBreakpoint: string) {
+    const breakpoints = options.breakpoints || {}
+
+    return breakpoints[searchBreakpoint]
   }
 
   /**

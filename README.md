@@ -204,6 +204,17 @@ The breakpoint key to be used, if the device was not detected.
 
 Current breakpoint.
 
+### `viewport.breakpointValue`
+- Type: Number
+
+```js
+// Example: viewport.breakpointValue for breakpoint names.
+
+viewport.breakpointValue('desktop') // Result: 1024.
+viewport.breakpointValue('tablet') // Result: 768.
+viewport.breakpointValue('mobile') // Result: 320.
+```
+
 ### `viewport.isGreaterThan`
 - Type: Boolean
 
