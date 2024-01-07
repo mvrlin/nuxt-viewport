@@ -9,7 +9,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   const manager = createViewportManager(viewportOptions, state)
 
   // Watch and handle media queries on client.
-  nuxtApp.hook('app:mounted', () => {
+  nuxtApp.hook('app:suspense:resolve', () => {
     for (const queryKey in manager.queries.value) {
       const { mediaQuery } = manager.queries.value[queryKey]
       const mediaQueryList = window.matchMedia(mediaQuery)
