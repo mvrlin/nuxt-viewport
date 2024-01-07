@@ -40,20 +40,20 @@
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.5.3",
-    "ua-parser-js": "^1.0.35",
-    "vue-demi": "^0.14.5"
+    "@nuxt/kit": "^3.9.1",
+    "ua-parser-js": "^1.0.37",
+    "vue-demi": "^0.14.6"
   },
   "devDependencies": {
-    "@nuxt/module-builder": "^0.4.0",
-    "@nuxt/schema": "^3.5.3",
-    "@nuxtjs/eslint-config-typescript": "^12.0.0",
-    "@types/ua-parser-js": "^0.7.36",
-    "eslint": "^8.43.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-prettier-vue": "^4.2.0",
-    "nuxt": "^3.5.3",
-    "prettier": "^2.8.8"
+    "@nuxt/module-builder": "^0.5.5",
+    "@nuxt/schema": "^3.9.1",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@types/ua-parser-js": "^0.7.39",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.2",
+    "eslint-plugin-prettier-vue": "^5.0.0",
+    "nuxt": "^3.9.1",
+    "prettier": "^3.1.1"
   }
 }
