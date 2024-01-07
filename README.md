@@ -128,7 +128,7 @@ The key for the document cookie.
 ### `defaultBreakpoints`
 
 - Type: Object
-- Detectable devices: `console`, `desktop`, `embedded`, `mobile`, `smarttv`, `tablet`, `wearable`
+- Detectable devices: `bot`, `desktop`, `mobile`, `tablet`, `tv`
 
 An object where the key is the name of the detected device, and the value is the breakpoint key.
 

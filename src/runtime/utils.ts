@@ -6,12 +6,16 @@ export async function detectBreakpoint(this: ViewportOptions, cookie?: string, u
       return cookie
     }
 
-    // Import ua-parser-js chunk.
-    const { default: UAParser } = await import(/* webpackChunkName: "ua-parser-js" */ 'ua-parser-js')
-    const parser = new UAParser(userAgent)
+    if (!userAgent) {
+      return this.fallbackBreakpoint
+    }
+
+    // Import bowser chunk.
+    const { default: Bowser } = await import(/* webpackChunkName: "bowser" */ 'bowser')
+    const parser = Bowser.getParser(userAgent)
 
     // Detect the device by User-Agent.
-    const { type: deviceType = '' } = parser.getDevice()
+    const deviceType = parser.getPlatformType()
 
     // If deviceType is included in the defaultBreakpoints, than use it.
     if (deviceType in this.defaultBreakpoints) {

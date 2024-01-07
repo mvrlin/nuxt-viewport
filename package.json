@@ -41,14 +41,13 @@
   },
   "dependencies": {
     "@nuxt/kit": "^3.9.1",
-    "ua-parser-js": "^1.0.37",
+    "bowser": "^2.11.0",
     "vue-demi": "^0.14.6"
   },
   "devDependencies": {
     "@nuxt/module-builder": "^0.5.5",
     "@nuxt/schema": "^3.9.1",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
-    "@types/ua-parser-js": "^0.7.39",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.2",
