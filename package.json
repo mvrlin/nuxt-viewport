@@ -34,10 +34,10 @@
     "dist"
   ],
   "scripts": {
-    "build": "nuxt-module-build",
+    "build": "nuxt-module-build build",
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
-    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground"
+    "dev:prepare": "nuxt-module-build prepare && nuxi prepare playground"
   },
   "dependencies": {
     "@nuxt/kit": "^3.9.1",
@@ -53,6 +53,7 @@
     "eslint-plugin-prettier": "^5.1.2",
     "eslint-plugin-prettier-vue": "^5.0.0",
     "nuxt": "^3.9.1",
-    "prettier": "^3.1.1"
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3"
   }
 }
