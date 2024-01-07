@@ -40,7 +40,8 @@ export default defineNuxtModule<ModuleOptions>({
       },
     }).dst
 
-    addPlugin(resolve(runtimeDir, 'plugin'))
+    addPlugin(resolve(runtimeDir, 'plugin.client'))
+    addPlugin(resolve(runtimeDir, 'plugin.server'))
 
     addImports({
       as: 'useViewport',

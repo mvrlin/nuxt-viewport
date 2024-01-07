@@ -1,5 +1,4 @@
 import { createViewportManager, STATE_KEY } from './manager'
-import { detectBreakpoint, parseCookie } from './utils'
 
 import { defineNuxtPlugin, useState } from '#imports'
 import viewportOptions from '#viewport-options'
@@ -27,33 +26,6 @@ export default defineNuxtPlugin(async (nuxtApp) => {
       }
     }
   })
-
-  // Don't detect viewport, if we have an initial value.
-  if (state.value) {
-    return nuxtApp.provide('viewport', manager)
-  }
-
-  let cookie = ''
-  let userAgent = ''
-
-  if (typeof window === 'undefined') {
-    const headers = nuxtApp?.ssrContext?.event?.req?.headers
-
-    if (headers != null) {
-      cookie = headers.cookie as string
-      userAgent = headers['user-agent'] as string
-    }
-  } else {
-    cookie = document.cookie
-    userAgent = navigator.userAgent
-  }
-
-  if (typeof cookie !== 'string') {
-    cookie = ''
-  }
-
-  cookie = parseCookie(cookie)[viewportOptions.cookieName]
-  state.value = await detectBreakpoint.call(viewportOptions, cookie, userAgent)
 
   return nuxtApp.provide('viewport', manager)
 })
