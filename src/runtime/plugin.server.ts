@@ -22,7 +22,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     cookie = ''
   }
 
-  cookie = parseCookie(cookie)[viewportOptions.cookieName]
+  cookie = parseCookie(cookie)[viewportOptions.cookie?.name]
   state.value = await detectBreakpoint.call(viewportOptions, cookie, userAgent)
 
   return nuxtApp.provide('viewport', manager)

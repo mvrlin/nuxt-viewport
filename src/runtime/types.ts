@@ -1,4 +1,12 @@
+import type { CookieSerializeOptions } from 'cookie'
 import type { createViewportManager } from './manager'
+
+/**
+ * Viewport cookie options.
+ */
+export type ViewportCookie = Omit<CookieSerializeOptions, 'encode'> & {
+  name?: string
+}
 
 /**
  * Viewport manager instance.
@@ -15,11 +23,9 @@ export type ViewportOptions = {
   breakpoints: Record<string, number>
 
   /**
-   * Cookie name.
-   *
-   * Default: "viewport".
+   * Cookie options.
    */
-  cookieName: string
+  cookie: ViewportCookie
 
   /**
    * Default breakpoints based on device type for auto detection.

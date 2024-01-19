@@ -118,12 +118,12 @@ watch(viewport.breakpoint, (newBreakpoint, oldBreakpoint) => {
 
 An object where the key is the name of the viewport, and the value is the viewport size.
 
-### `cookieName`
+### `cookie`
 
-- Type: String
-- Default: `viewport`
+- Type: Object
 
-The key for the document cookie.
+An object with options for cookie.
+See more https://www.npmjs.com/package/cookie#options-1
 
 ### `defaultBreakpoints`
 
@@ -157,7 +157,13 @@ The breakpoint key to be used, if the device was not detected.
       tablet: 768,
     },
 
-    cookieName: 'viewport',
+    cookie: {
+      maxAge: 365 * 24 * 60 * 60, // 365 days
+      name: 'viewport',
+      path: '/',
+      sameSite: 'strict',
+      secure: true,
+    },
 
     defaultBreakpoints: {
       desktop: 'desktop',
