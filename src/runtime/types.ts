@@ -24,7 +24,7 @@ export type ViewportOptions = {
   /**
    * Default breakpoints based on device type for auto detection.
    *
-   * Available devices: "console", "desktop", "embedded", "mobile", "smarttv", "tablet", "wearable".
+   * Available devices: "bot", "desktop", "mobile", "tablet", "tv".
    */
   defaultBreakpoints: Record<string, string>
 
