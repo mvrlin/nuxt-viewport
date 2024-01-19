@@ -123,7 +123,7 @@ An object where the key is the name of the viewport, and the value is the viewpo
 - Type: Object
 
 An object with options for cookie.
-See more https://www.npmjs.com/package/cookie#options-1
+See more https://www.npmjs.com/package/cookiejs#cookie-attributes
 
 ### `defaultBreakpoints`
 
