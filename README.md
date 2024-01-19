@@ -158,10 +158,10 @@ The breakpoint key to be used, if the device was not detected.
     },
 
     cookie: {
-      maxAge: 365 * 24 * 60 * 60, // 365 days
+      expires: 365, // 365 days
       name: 'viewport',
       path: '/',
-      sameSite: 'strict',
+      sameSite: 'Strict',
       secure: true,
     },
 

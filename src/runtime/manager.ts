@@ -1,9 +1,9 @@
-import { serialize as serializeCookie } from 'cookie'
+import cookie from 'cookiejs'
 import { computed, type Ref } from 'vue-demi'
 
 import type { ViewportOptions, ViewportQuery } from './types'
 
-const COOKIE_EXPIRES_IN_DAYS = 365 * 24 * 60 * 60
+const COOKIE_EXPIRES_IN_DAYS = 365
 
 export const DEFAULT_OPTIONS: ViewportOptions = {
   breakpoints: {
@@ -19,10 +19,10 @@ export const DEFAULT_OPTIONS: ViewportOptions = {
   },
 
   cookie: {
-    maxAge: COOKIE_EXPIRES_IN_DAYS,
+    expires: COOKIE_EXPIRES_IN_DAYS,
     name: 'viewport',
     path: '/',
-    sameSite: 'strict',
+    sameSite: 'Strict',
     secure: true,
   },
 
@@ -47,7 +47,7 @@ export function createViewportManager(options: ViewportOptions, state: Ref<strin
       state.value = newBreakpoint
 
       if (typeof window !== 'undefined' && options.cookie.name) {
-        document.cookie = serializeCookie(options.cookie.name, state.value, options.cookie)
+        cookie.set(options.cookie.name, state.value, options.cookie)
       }
     },
   })

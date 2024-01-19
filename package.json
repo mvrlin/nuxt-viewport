@@ -42,14 +42,13 @@
   "dependencies": {
     "@nuxt/kit": "^3.9.3",
     "bowser": "^2.11.0",
-    "cookie": "^0.6.0",
+    "cookiejs": "^2.1.3",
     "vue-demi": "^0.14.6"
   },
   "devDependencies": {
     "@nuxt/module-builder": "^0.5.5",
     "@nuxt/schema": "^3.9.3",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
-    "@types/cookie": "^0.6.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",

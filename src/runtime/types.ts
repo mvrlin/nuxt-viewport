@@ -1,10 +1,10 @@
-import type { CookieSerializeOptions } from 'cookie'
+import type { CookieOptions } from 'cookiejs'
 import type { createViewportManager } from './manager'
 
 /**
  * Viewport cookie options.
  */
-export type ViewportCookie = Omit<CookieSerializeOptions, 'encode'> & {
+export type ViewportCookie = CookieOptions & {
   name?: string
 }
 
