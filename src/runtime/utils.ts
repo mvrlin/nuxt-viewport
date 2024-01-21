@@ -1,8 +1,9 @@
+import type { IncomingHttpHeaders } from 'http'
 import type { ViewportOptions } from '../runtime/types'
 
 export type DetectBreakpointInput = {
   cookie: string
-  userAgent: string
+  headers: IncomingHttpHeaders
 }
 
 export async function detectBreakpoint(options: ViewportOptions, input: Partial<DetectBreakpointInput>) {
@@ -11,16 +12,47 @@ export async function detectBreakpoint(options: ViewportOptions, input: Partial<
       return input.cookie
     }
 
-    if (!input.userAgent) {
+    const userAgent = input.headers?.['user-agent']
+    if (!userAgent) {
       return options.fallbackBreakpoint
     }
 
-    // Import bowser chunk.
-    const { default: Bowser } = await import(/* webpackChunkName: "bowser" */ 'bowser')
-    const parser = Bowser.getParser(input.userAgent)
+    let deviceType = ''
+
+    // Detect the device by headers.
+    if (input.headers) {
+      // Amazon CloudFront.
+      if (userAgent === 'Amazon CloudFront') {
+        const types: Record<string, string> = {
+          'cloudfront-is-android-viewer': 'mobile',
+          'cloudfront-is-desktop-viewer': 'desktop',
+          'cloudfront-is-ios-viewer': 'mobile',
+          'cloudfront-is-mobile-viewer': 'mobile',
+          'cloudfront-is-smarttv-viewer': 'tv',
+          'cloudfront-is-tablet-viewer': 'tablet',
+        }
+
+        for (const key in types) {
+          if (input.headers[key] === 'true') {
+            deviceType = types[key]
+            break
+          }
+        }
+
+        // Cloudflare.
+      } else if (input.headers['cf-device-type']) {
+        deviceType = input.headers['cf-device-type'] as string
+      }
+    }
 
     // Detect the device by User-Agent.
-    const deviceType = parser.getPlatformType()
+    if (!deviceType) {
+      // Import bowser chunk.
+      const { default: Bowser } = await import(/* webpackChunkName: "bowser" */ 'bowser')
+      const parser = Bowser.getParser(userAgent)
+
+      deviceType = parser.getPlatformType()
+    }
 
     // If deviceType is included in the defaultBreakpoints, than use it.
     if (deviceType in options.defaultBreakpoints) {
