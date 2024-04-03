@@ -21,10 +21,7 @@
 1. Add `nuxt-viewport` dependency to your project
 
 ```bash
-# Using npm
-npm install --save-dev nuxt-viewport
-# Using yarn
-yarn add --dev nuxt-viewport
+npx nuxi@latest module add nuxt-viewport
 ```
 
 2. Add `nuxt-viewport` to the `modules` section of `nuxt.config.js`
