@@ -136,6 +136,13 @@ An object where the key is the name of the detected device, and the value is the
 
 The breakpoint key to be used, if the device was not detected.
 
+### `feature`
+
+- Type: `'minWidth' | 'maxWidth'`
+- Default: `'minWidth'`
+
+CSS media feature.
+
 ## Default configuration
 
 ```js
