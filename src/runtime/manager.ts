@@ -33,6 +33,8 @@ export const DEFAULT_OPTIONS: ViewportOptions = {
   },
 
   fallbackBreakpoint: 'desktop',
+
+  feature: 'minWidth',
 }
 
 export const STATE_KEY = 'viewportState'
@@ -64,17 +66,26 @@ export function createViewportManager(options: ViewportOptions, state: Ref<strin
 
       const size = breakpoints[currentKey]
       const nextSize = breakpoints[breakpointsKeys[i + 1]]
+      const prevSize = breakpoints[breakpointsKeys[i - 1]]
 
       let mediaQuery = ''
 
-      if (i > 0) {
-        mediaQuery = `(min-width: ${size}px)`
-      } else {
-        mediaQuery = '(min-width: 1px)'
-      }
+      if (options.feature === 'minWidth') {
+        if (i > 0) {
+          mediaQuery = `(min-width: ${size}px)`
+        } else {
+          mediaQuery = '(min-width: 1px)'
+        }
 
-      if (nextSize) {
-        mediaQuery += ` and (max-width: ${nextSize - 1}px)`
+        if (nextSize) {
+          mediaQuery += ` and (max-width: ${nextSize - 1}px)`
+        }
+      } else {
+        mediaQuery = `(max-width: ${size}px)`
+
+        if (prevSize) {
+          mediaQuery = `(min-width: ${prevSize - 1}px) and ${mediaQuery}`
+        }
       }
 
       output[currentKey] = {

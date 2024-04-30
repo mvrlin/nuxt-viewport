@@ -38,6 +38,11 @@ export type ViewportOptions = {
    * Fallback breakpoint.
    */
   fallbackBreakpoint: string
+
+  /**
+   * CSS media feature.
+   */
+  feature: 'minWidth' | 'maxWidth'
 }
 
 /**
