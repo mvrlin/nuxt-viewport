@@ -4,7 +4,7 @@
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![License][license-src]][license-href]
 
-> Define custom viewports for your [Nuxt](https://v3.nuxtjs.org/)️ project
+> Define custom viewports for your [Nuxt](https://nuxt.com/)️ project
 
 ## Features
 
