@@ -3,8 +3,8 @@ import { addImports, addPlugin, addTemplate, createResolver, defineNuxtModule } 
 
 import { name, version } from '../package.json'
 
-import { DEFAULT_OPTIONS } from './runtime/manager'
-import type { ViewportOptions } from './runtime/types'
+import { DEFAULT_OPTIONS } from './constants'
+import type { ViewportOptions } from './types'
 
 export type ModuleOptions = ViewportOptions
 

@@ -1,5 +1,5 @@
 import type { IncomingHttpHeaders } from 'http'
-import type { ViewportOptions } from '../runtime/types'
+import type { ViewportOptions } from '../types'
 
 export type DetectBreakpointInput = {
   cookie: string

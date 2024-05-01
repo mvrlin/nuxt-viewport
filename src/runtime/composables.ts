@@ -1,4 +1,4 @@
-import { ViewportManager } from './types'
+import { type ViewportManager } from '../types'
 import { useNuxtApp } from '#imports'
 
 export function useViewport(): ViewportManager {

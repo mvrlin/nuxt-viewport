@@ -1,5 +1,5 @@
 import type { CookieOptions } from 'cookiejs'
-import type { createViewportManager } from './manager'
+import type { createViewportManager } from './runtime/manager'
 
 /**
  * Viewport cookie options.
