@@ -176,6 +176,8 @@ CSS media feature.
     },
 
     fallbackBreakpoint: 'desktop',
+
+    feature: 'minWidth',
   },
   // ...
 }
