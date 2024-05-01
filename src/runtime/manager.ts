@@ -49,7 +49,9 @@ export function createViewportManager(options: ViewportOptions, state: Ref<strin
       } else {
         mediaQuery = `(max-width: ${size}px)`
 
-        if (prevSize) {
+        if (!nextSize) {
+          mediaQuery = `(min-width: ${prevSize - 1}px)`
+        } else if (prevSize) {
           mediaQuery = `(min-width: ${prevSize - 1}px) and ${mediaQuery}`
         }
       }
