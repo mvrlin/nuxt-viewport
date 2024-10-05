@@ -20,6 +20,9 @@
         <code>isLessThan</code> → <b>{{ $viewport.isLessThan(breakpoint) }}</b>
       </p>
       <p>
+        <code>isLessOrEquals</code> → <b>{{ $viewport.isLessOrEquals(breakpoint) }}</b>
+      </p>
+      <p>
         <code>isGreaterThan</code> → <b>{{ $viewport.isGreaterThan(breakpoint) }}</b>
       </p>
       <p>

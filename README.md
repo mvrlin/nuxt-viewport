@@ -8,9 +8,9 @@
 
 ## Features
 
-- ⚡️&nbsp; Fast & Light with [MatchMedia API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) ⚡️
+- �️&nbsp; Fast & Light with [MatchMedia API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) ⚡️
 - 🕶&nbsp; Auto detects the device viewport from Cookie & User-Agent
-- 👌&nbsp; Zero configuration to start
+- �️&nbsp; Zero configuration to start
 - 👴️&nbsp; Supports IE9+
 
 > **Note**\
@@ -255,6 +255,16 @@ viewport.isGreaterOrEquals('desktop') // Result: false.
 
 viewport.isLessThan('desktopWide') // Result: true.
 viewport.isLessThan('mobile') // Result: false.
+```
+
+### `viewport.isLessOrEquals`
+- Type: Boolean
+
+```js
+// Example: viewport.breakpoint is "tablet".
+
+viewport.isLessOrEquals('tablet') // Result: true.
+viewport.isLessOrEquals('mobile') // Result: false.
 ```
 
 ### `viewport.match`
