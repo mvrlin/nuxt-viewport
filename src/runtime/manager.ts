@@ -73,6 +73,7 @@ export function createViewportManager(options: ViewportOptions, state: Ref<strin
     isGreaterOrEquals,
 
     isLessThan,
+    isLessOrEquals,
 
     match,
     matches,
@@ -126,6 +127,14 @@ export function createViewportManager(options: ViewportOptions, state: Ref<strin
     }
 
     return breakpointIndex < currentIndex
+  }
+
+  /**
+   * Returns true, if searchBreakpoint is less or equals the current breakpoint.
+   * @param searchBreakpoint - Breakpoint to search.
+   */
+  function isLessOrEquals(searchBreakpoint: string) {
+    return isLessThan(searchBreakpoint) || match(searchBreakpoint)
   }
 
   /**
