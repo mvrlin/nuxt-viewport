@@ -257,6 +257,16 @@ viewport.isLessThan('desktopWide') // Result: true.
 viewport.isLessThan('mobile') // Result: false.
 ```
 
+### `viewport.isLessOrEquals`
+- Type: Boolean
+
+```js
+// Example: viewport.breakpoint is "tablet".
+
+viewport.isLessOrEquals('tablet') // Result: true.
+viewport.isLessOrEquals('mobile') // Result: false.
+```
+
 ### `viewport.match`
 - Type: Boolean
 
