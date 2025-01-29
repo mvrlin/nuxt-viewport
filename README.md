@@ -189,7 +189,7 @@ CSS media feature.
   // ...
   viewport: {
     breakpoints: {
-      xs: 320,
+      xs: 0,
       sm: 640,
       md: 768,
       lg: 1024,
@@ -203,7 +203,7 @@ CSS media feature.
       tablet: 'md',
     },
 
-    fallbackBreakpoint: 'lg'
+    fallbackBreakpoint: 'xs'
   },
   // ...
 }
