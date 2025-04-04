@@ -1,5 +1,5 @@
 import type { CookieOptions } from 'cookiejs'
-import type { createViewportManager } from './runtime/manager'
+import type { createViewportManager } from './manager'
 
 /**
  * Viewport cookie options.
@@ -71,6 +71,16 @@ declare module 'vue/types/vue' {
 declare module '#app' {
   // eslint-disable-next-line no-use-before-define
   interface NuxtApp extends PluginInjection {}
+
+  interface PageMeta {
+    viewport?: Partial<ViewportOptions>
+  }
+}
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    viewport?: Partial<ViewportOptions>
+  }
 }
 
 interface PluginInjection {

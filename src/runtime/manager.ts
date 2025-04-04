@@ -1,27 +1,27 @@
 import cookie from 'cookiejs'
-import { computed, type Ref } from 'vue-demi'
+import { computed, type MaybeRefOrGetter, type Ref, toValue } from 'vue-demi'
 
-import type { ViewportOptions, ViewportQuery } from '../types'
+import type { ViewportOptions, ViewportQuery } from './types'
 
 export const STATE_KEY = 'viewportState'
 
-export function createViewportManager(options: ViewportOptions, state: Ref<string>) {
+export function createViewportManager(options: MaybeRefOrGetter<ViewportOptions>, state: Ref<string>) {
   const breakpoint = computed<string>({
     get() {
-      return state.value || options.fallbackBreakpoint
+      return state.value || toValue(options).fallbackBreakpoint
     },
 
     set(newBreakpoint) {
       state.value = newBreakpoint
 
-      if (typeof window !== 'undefined' && options.cookie.name) {
-        cookie.set(options.cookie.name, state.value, options.cookie)
+      if (typeof window !== 'undefined' && toValue(options).cookie.name) {
+        cookie.set(toValue(options).cookie.name, state.value, toValue(options).cookie)
       }
     },
   })
 
   const queries = computed<Record<string, ViewportQuery>>(() => {
-    const breakpoints = options.breakpoints || {}
+    const breakpoints = toValue(options).breakpoints || {}
     const breakpointsKeys = Object.keys(breakpoints).sort((a, b) => breakpoints[a] - breakpoints[b])
 
     const output: Record<string, ViewportQuery> = {}
@@ -36,7 +36,7 @@ export function createViewportManager(options: ViewportOptions, state: Ref<strin
 
       let mediaQuery = ''
 
-      if (options.feature === 'minWidth') {
+      if (toValue(options).feature === 'minWidth') {
         if (i > 0) {
           mediaQuery = `(min-width: ${size}px)`
         } else {
@@ -86,7 +86,7 @@ export function createViewportManager(options: ViewportOptions, state: Ref<strin
    * @param searchBreakpoint - Breakpoint to search.
    */
   function breakpointValue(searchBreakpoint: string) {
-    const breakpoints = options.breakpoints || {}
+    const breakpoints = toValue(options).breakpoints || {}
 
     return breakpoints[searchBreakpoint]
   }
