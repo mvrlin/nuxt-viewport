@@ -1,4 +1,4 @@
-import { type ViewportOptions } from './types'
+import type { ViewportOptions } from './types'
 
 export const COOKIE_EXPIRES_IN_DAYS = 365
 

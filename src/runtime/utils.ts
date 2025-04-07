@@ -1,5 +1,6 @@
 import type { IncomingHttpHeaders } from 'http'
-import type { ViewportOptions } from '../types'
+import type { ViewportOptions } from './types'
+import { DEFAULT_OPTIONS } from './constants'
 
 export type DetectBreakpointInput = {
   cookie: string
@@ -72,4 +73,19 @@ export function parseCookie(input: string): Record<string, string> {
   }
 
   return Object.fromEntries(input.split(/; */).map((cookie) => cookie.split('=', 2)))
+}
+
+export function extendOptions(
+  options: Partial<ViewportOptions> = {},
+  extendFrom: ViewportOptions = DEFAULT_OPTIONS,
+): ViewportOptions {
+  return {
+    ...extendFrom,
+    ...options,
+
+    cookie: {
+      ...extendFrom.cookie,
+      ...options.cookie,
+    },
+  }
 }

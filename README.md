@@ -209,6 +209,26 @@ CSS media feature.
 }
 ```
 
+## Per-page configuration
+You can override the global configuration for specific pages using [`definePageMeta`](https://nuxt.com/docs/api/utils/define-page-meta).
+```vue
+<script setup>
+definePageMeta({
+  viewport: {
+    breakpoints: {
+      desktop: 1024,
+      mobile: 320,
+      tablet: 768
+    },
+    cookie: {
+      name: 'viewport-per-page'
+    }
+    // Other fields will be inherited from the global configuration
+  }
+})
+</script>
+```
+
 ## API
 
 ### `viewport.breakpoint`

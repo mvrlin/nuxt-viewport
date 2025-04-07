@@ -1,9 +1,10 @@
 import { createViewportManager, STATE_KEY } from './manager'
 
+import { useViewportOptions } from './composables'
 import { defineNuxtPlugin, useState } from '#imports'
-import viewportOptions from '#viewport-options'
 
-export default defineNuxtPlugin(async (nuxtApp) => {
+export default defineNuxtPlugin((nuxtApp) => {
+  const viewportOptions = useViewportOptions()
   const state = useState<string>(STATE_KEY)
   const manager = createViewportManager(viewportOptions, state)
 
