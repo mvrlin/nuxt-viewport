@@ -1,5 +1,5 @@
 import cookie from 'cookiejs'
-import { computed, type MaybeRefOrGetter, type Ref, toRef } from 'vue-demi'
+import { computed, type MaybeRefOrGetter, type Ref, toRef, toValue } from 'vue-demi'
 
 import type { ViewportOptions, ViewportQuery } from './types'
 
@@ -67,16 +67,6 @@ export function createViewportManager(options: MaybeRefOrGetter<ViewportOptions>
 
   const queriesKeys = computed(() => Object.keys(queries.value))
 
-  /**
-   * Returns breakpoint size from breakpoint name.
-   * @param searchBreakpoint - Breakpoint to search.
-   */
-  const breakpointValue = (searchBreakpoint: string) => {
-    const breakpoints = options.value.breakpoints || {}
-
-    return breakpoints[searchBreakpoint]
-  }
-
   return {
     breakpoint,
     breakpointValue,
@@ -91,6 +81,16 @@ export function createViewportManager(options: MaybeRefOrGetter<ViewportOptions>
     matches,
 
     queries,
+  }
+
+  /**
+   * Returns breakpoint size from breakpoint name.
+   * @param searchBreakpoint - Breakpoint to search.
+   */
+  function breakpointValue(searchBreakpoint: string) {
+    const breakpoints = toValue(options).breakpoints || {}
+
+    return breakpoints[searchBreakpoint]
   }
 
   /**
