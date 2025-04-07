@@ -1,27 +1,29 @@
 import cookie from 'cookiejs'
-import { computed, type MaybeRefOrGetter, type Ref, toValue } from 'vue-demi'
+import { computed, type MaybeRefOrGetter, type Ref, toRef } from 'vue-demi'
 
 import type { ViewportOptions, ViewportQuery } from './types'
 
 export const STATE_KEY = 'viewportState'
 
 export function createViewportManager(options: MaybeRefOrGetter<ViewportOptions>, state: Ref<string>) {
+  options = toRef(options)
+
   const breakpoint = computed<string>({
     get() {
-      return state.value || toValue(options).fallbackBreakpoint
+      return state.value || options.value.fallbackBreakpoint
     },
 
     set(newBreakpoint) {
       state.value = newBreakpoint
 
-      if (typeof window !== 'undefined' && toValue(options).cookie.name) {
-        cookie.set(toValue(options).cookie.name, state.value, toValue(options).cookie)
+      if (typeof window !== 'undefined' && options.value.cookie.name) {
+        cookie.set(options.value.cookie.name, state.value, options.value.cookie)
       }
     },
   })
 
   const queries = computed<Record<string, ViewportQuery>>(() => {
-    const breakpoints = toValue(options).breakpoints || {}
+    const breakpoints = options.value.breakpoints || {}
     const breakpointsKeys = Object.keys(breakpoints).sort((a, b) => breakpoints[a] - breakpoints[b])
 
     const output: Record<string, ViewportQuery> = {}
@@ -36,7 +38,7 @@ export function createViewportManager(options: MaybeRefOrGetter<ViewportOptions>
 
       let mediaQuery = ''
 
-      if (toValue(options).feature === 'minWidth') {
+      if (options.value.feature === 'minWidth') {
         if (i > 0) {
           mediaQuery = `(min-width: ${size}px)`
         } else {
@@ -65,6 +67,16 @@ export function createViewportManager(options: MaybeRefOrGetter<ViewportOptions>
 
   const queriesKeys = computed(() => Object.keys(queries.value))
 
+  /**
+   * Returns breakpoint size from breakpoint name.
+   * @param searchBreakpoint - Breakpoint to search.
+   */
+  const breakpointValue = (searchBreakpoint: string) => {
+    const breakpoints = options.value.breakpoints || {}
+
+    return breakpoints[searchBreakpoint]
+  }
+
   return {
     breakpoint,
     breakpointValue,
@@ -79,16 +91,6 @@ export function createViewportManager(options: MaybeRefOrGetter<ViewportOptions>
     matches,
 
     queries,
-  }
-
-  /**
-   * Returns breakpoint size from breakpoint name.
-   * @param searchBreakpoint - Breakpoint to search.
-   */
-  function breakpointValue(searchBreakpoint: string) {
-    const breakpoints = toValue(options).breakpoints || {}
-
-    return breakpoints[searchBreakpoint]
   }
 
   /**
