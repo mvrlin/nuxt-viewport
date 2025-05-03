@@ -23,6 +23,10 @@ export function createViewportManager(options: MaybeRefOrGetter<ViewportOptions>
   })
 
   const queries = computed<Record<string, ViewportQuery>>(() => {
+    // Fix an odd rendering glitch with specific operating system UI scaling,
+    // and combined with specific viewport sizes.
+    const delta = 0.02
+
     const breakpoints = options.value.breakpoints || {}
     const breakpointsKeys = Object.keys(breakpoints).sort((a, b) => breakpoints[a] - breakpoints[b])
 
@@ -46,13 +50,13 @@ export function createViewportManager(options: MaybeRefOrGetter<ViewportOptions>
         }
 
         if (nextSize) {
-          mediaQuery += ` and (max-width: ${nextSize - 1}px)`
+          mediaQuery += ` and (max-width: ${nextSize - delta}px)`
         }
       } else {
         mediaQuery = `(max-width: ${size}px)`
 
         if (prevSize) {
-          mediaQuery = `(min-width: ${prevSize - 1}px) and ${mediaQuery}`
+          mediaQuery = `(min-width: ${prevSize + delta}px) and ${mediaQuery}`
         }
       }
 
