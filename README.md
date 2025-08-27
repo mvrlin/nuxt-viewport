@@ -14,7 +14,7 @@
 - 👴️&nbsp; Supports IE9+
 
 > **Note**\
-> This version is Nuxt 3 & Nuxt Bridge only. For Nuxt 2 see [1.0.1](https://www.npmjs.com/package/nuxt-viewport/v/1.0.1)
+> This version is Nuxt 3+ & Nuxt Bridge only. For Nuxt 2 see [1.0.1](https://www.npmjs.com/package/nuxt-viewport/v/1.0.1)
 
 ## Quick Setup
 
