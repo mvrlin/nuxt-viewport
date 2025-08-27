@@ -1,24 +1,20 @@
-import { createViewportManager, STATE_KEY } from './manager'
+import { useViewportOptions } from './composables'
+import { STATE_KEY, STATE_USE_COOKIE_KEY } from './constants'
+import { createViewportManager } from './manager'
 import { detectBreakpoint, parseCookie } from './utils'
 
-import { useViewportOptions } from './composables'
-import { defineNuxtPlugin, useState } from '#imports'
+import { computed, defineNuxtPlugin, useState } from '#imports'
 
 export default defineNuxtPlugin(async (nuxtApp) => {
   const viewportOptions = useViewportOptions()
+
   const state = useState<string>(STATE_KEY)
-  const manager = createViewportManager(viewportOptions, state)
+  const useCookie = useState<boolean>(STATE_USE_COOKIE_KEY, () => viewportOptions.value.useCookie)
 
-  let cookie = ''
-  let userAgent = ''
-
+  const manager = createViewportManager(viewportOptions, state, useCookie)
   const headers = nuxtApp?.ssrContext?.event?.req?.headers
 
-  if (headers != null) {
-    cookie = headers.cookie as string
-    userAgent = headers['user-agent'] as string
-  }
-
+  let cookie = headers == null ? '' : headers.cookie
   if (typeof cookie !== 'string') {
     cookie = ''
   }

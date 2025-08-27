@@ -43,6 +43,11 @@ export type ViewportOptions = {
    * CSS media feature.
    */
   feature: 'minWidth' | 'maxWidth'
+
+  /**
+   * Store breakpoint value in cookie.
+   */
+  useCookie: boolean
 }
 
 /**

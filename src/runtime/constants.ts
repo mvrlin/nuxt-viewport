@@ -32,4 +32,12 @@ export const DEFAULT_OPTIONS: ViewportOptions = {
   fallbackBreakpoint: 'desktop',
 
   feature: 'minWidth',
+
+  useCookie: true,
 }
+
+export const STATE_KEY = 'viewportState'
+
+export const STATE_USE_COOKIE_KEY = 'viewportUseCookie'
+
+export const STORAGE_USE_COOKIE_KEY = 'viewportUseCookie'

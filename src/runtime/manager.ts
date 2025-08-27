@@ -1,11 +1,12 @@
-import cookie from 'cookiejs'
 import { computed, type MaybeRefOrGetter, type Ref, toRef, toValue } from 'vue-demi'
 
 import type { ViewportOptions, ViewportQuery } from './types'
 
-export const STATE_KEY = 'viewportState'
-
-export function createViewportManager(options: MaybeRefOrGetter<ViewportOptions>, state: Ref<string>) {
+export function createViewportManager(
+  options: MaybeRefOrGetter<ViewportOptions>,
+  state: Ref<string>,
+  useCookie: Ref<boolean>,
+) {
   options = toRef(options)
 
   const breakpoint = computed<string>({
@@ -15,10 +16,6 @@ export function createViewportManager(options: MaybeRefOrGetter<ViewportOptions>
 
     set(newBreakpoint) {
       state.value = newBreakpoint
-
-      if (typeof window !== 'undefined' && options.value.cookie.name) {
-        cookie.set(options.value.cookie.name, state.value, options.value.cookie)
-      }
     },
   })
 
@@ -85,6 +82,8 @@ export function createViewportManager(options: MaybeRefOrGetter<ViewportOptions>
     matches,
 
     queries,
+
+    useCookie,
   }
 
   /**

@@ -1,6 +1,17 @@
 <template>
   <section>
     <p>
+      Cookie is:
+      <ClientOnly>
+        <b>{{ $viewport.useCookie.value ? 'enabled' : 'disabled' }}</b>
+      </ClientOnly>
+    </p>
+
+    <button @click="$viewport.useCookie.value = !$viewport.useCookie.value">Toggle Storage Mode</button>
+  </section>
+
+  <section>
+    <p>
       Your value of breakpoint {{ $viewport.breakpoint.value }} is:
       <b>{{ $viewport.breakpointValue($viewport.breakpoint.value) }}</b>
     </p>
@@ -78,5 +89,9 @@ code {
   padding: 0.25em 0.35rem;
   background: #ccc;
   border-radius: 0.25rem;
+}
+
+section + section {
+  margin-top: 0.5em;
 }
 </style>
