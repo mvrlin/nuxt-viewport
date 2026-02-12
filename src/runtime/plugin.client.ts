@@ -8,6 +8,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   const state = useState<string>(STATE_KEY)
   const manager = createViewportManager(viewportOptions, state)
 
+  const mediaQueryCleanups: (() => void)[] = []
+
   // Watch and handle media queries on client.
   nuxtApp.hook('app:suspense:resolve', () => {
     for (const queryKey in manager.queries.value) {
@@ -18,13 +20,23 @@ export default defineNuxtPlugin((nuxtApp) => {
         manager.breakpoint.value = queryKey
       }
 
-      mediaQueryList.onchange = (event) => {
+      function onChange(event: MediaQueryListEvent) {
         if (!event.matches) {
           return
         }
 
         manager.breakpoint.value = queryKey
       }
+
+      mediaQueryList.addEventListener('change', onChange)
+      mediaQueryCleanups.push(() => mediaQueryList.removeEventListener('change', onChange))
+    }
+  })
+
+  // Cleanup media queries when unmounted.
+  nuxtApp.vueApp.onUnmount(() => {
+    while (mediaQueryCleanups.length) {
+      mediaQueryCleanups.pop()?.()
     }
   })
 
