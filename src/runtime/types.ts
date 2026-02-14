@@ -1,12 +1,13 @@
 import type { CookieOptions } from 'cookiejs'
+
 import type { createViewportManager } from './manager'
 
 /**
  * Viewport cookie options.
  */
-export type ViewportCookie = CookieOptions & {
+export type ViewportCookie = {
   name?: string
-}
+} & CookieOptions
 
 /**
  * Viewport manager instance.
@@ -42,7 +43,7 @@ export type ViewportOptions = {
   /**
    * CSS media feature.
    */
-  feature: 'minWidth' | 'maxWidth'
+  feature: 'maxWidth' | 'minWidth'
 }
 
 /**
@@ -60,7 +61,7 @@ export type ViewportQuery = {
   size: number
 }
 
-// @ts-ignore
+// @ts-expect-error override Vue interface
 declare module 'vue/types/vue' {
   interface Vue {
     $viewport: ViewportManager
@@ -69,7 +70,7 @@ declare module 'vue/types/vue' {
 
 // Nuxt Bridge & Nuxt 3
 declare module '#app' {
-  // eslint-disable-next-line no-use-before-define
+
   interface NuxtApp extends PluginInjection {}
 
   interface PageMeta {

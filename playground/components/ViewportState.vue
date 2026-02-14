@@ -8,8 +8,11 @@
       Your current breakpoint is: <b>{{ $viewport.breakpoint }}</b>
     </p>
 
-    <div v-for="breakpoint in ['mobile', 'tablet', 'desktop']" :key="breakpoint">
-      <hr />
+    <div
+      v-for="breakpoint in ['mobile', 'tablet', 'desktop']"
+      :key="breakpoint"
+    >
+      <hr>
 
       <h4>{{ breakpoint }}</h4>
 

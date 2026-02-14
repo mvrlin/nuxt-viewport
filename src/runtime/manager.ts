@@ -45,14 +45,16 @@ export function createViewportManager(options: MaybeRefOrGetter<ViewportOptions>
       if (options.value.feature === 'minWidth') {
         if (i > 0) {
           mediaQuery = `(min-width: ${size}px)`
-        } else {
+        }
+        else {
           mediaQuery = '(min-width: 1px)'
         }
 
         if (nextSize) {
           mediaQuery += ` and (max-width: ${nextSize - delta}px)`
         }
-      } else {
+      }
+      else {
         mediaQuery = `(max-width: ${size}px)`
 
         if (prevSize) {
@@ -75,11 +77,11 @@ export function createViewportManager(options: MaybeRefOrGetter<ViewportOptions>
     breakpoint,
     breakpointValue,
 
-    isGreaterThan,
     isGreaterOrEquals,
+    isGreaterThan,
 
-    isLessThan,
     isLessOrEquals,
+    isLessThan,
 
     match,
     matches,

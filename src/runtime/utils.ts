@@ -1,5 +1,7 @@
-import type { IncomingHttpHeaders } from 'http'
+import type { IncomingHttpHeaders } from 'node:http'
+
 import type { ViewportOptions } from './types'
+
 import { DEFAULT_OPTIONS } from './constants'
 
 export type DetectBreakpointInput = {
@@ -41,7 +43,8 @@ export async function detectBreakpoint(options: ViewportOptions, input: Partial<
         }
 
         // Cloudflare.
-      } else if (input.headers['cf-device-type']) {
+      }
+      else if (input.headers['cf-device-type']) {
         deviceType = input.headers['cf-device-type'] as string
       }
     }
@@ -61,18 +64,11 @@ export async function detectBreakpoint(options: ViewportOptions, input: Partial<
     }
 
     return options.fallbackBreakpoint
-  } catch (error) {
+  }
+  catch (error) {
     console.error(error)
     return options.fallbackBreakpoint
   }
-}
-
-export function parseCookie(input: string): Record<string, string> {
-  if (!input.length) {
-    return {}
-  }
-
-  return Object.fromEntries(input.split(/; */).map((cookie) => cookie.split('=', 2)))
 }
 
 export function extendOptions(
@@ -88,4 +84,12 @@ export function extendOptions(
       ...options.cookie,
     },
   }
+}
+
+export function parseCookie(input: string): Record<string, string> {
+  if (!input.length) {
+    return {}
+  }
+
+  return Object.fromEntries(input.split(/; */).map(cookie => cookie.split('=', 2)))
 }

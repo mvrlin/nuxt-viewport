@@ -1,21 +1,22 @@
-import { fileURLToPath } from 'url'
-import { addImports, addPlugin, addTemplate, addTypeTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
-
-import { name, version } from '../package.json'
+import { addImports, addPlugin, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { fileURLToPath } from 'node:url'
 
 import type { ViewportOptions } from './runtime/types'
+
+import { name, version } from '../package.json'
 import { extendOptions } from './runtime/utils'
 
 export type ModuleOptions = ViewportOptions
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    configKey: 'viewport',
-
     compatibility: {
-      bridge: true,
+      // @ts-expect-error property removed in Nuxt 4
+      bridge: false,
+      nuxt: '>=3.0.0-rc.11',
     },
 
+    configKey: 'viewport',
     name,
     version,
   },
@@ -43,7 +44,6 @@ export default defineNuxtModule<ModuleOptions>({
     addImports({
       as: 'useViewport',
       from: resolve(runtimeDir, 'composables'),
-
       name: 'useViewport',
     })
   },
