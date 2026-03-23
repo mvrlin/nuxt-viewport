@@ -1,95 +1,94 @@
-import type { IncomingHttpHeaders } from 'node:http'
+import Bowser from 'bowser'
+import type { H3Event } from 'h3'
 
-import type { ViewportOptions } from './types'
-
-import { DEFAULT_OPTIONS } from './constants'
-
-export type DetectBreakpointInput = {
-  cookie: string
-  headers: IncomingHttpHeaders
+export interface ClientHintsOptions {
+  viewportWidth?: boolean
+  critical?: boolean
 }
 
-export async function detectBreakpoint(options: ViewportOptions, input: Partial<DetectBreakpointInput>) {
-  try {
-    if (input.cookie && input.cookie in options.breakpoints) {
-      return input.cookie
-    }
+export interface ViewportOptions {
+  cookie?: boolean
+  clientHints?: boolean | ClientHintsOptions
+  fallback?: string
+}
 
-    const userAgent = input.headers?.['user-agent']
-    if (!userAgent) {
-      return options.fallbackBreakpoint
-    }
+export function getViewportFromCookie(event: H3Event) {
+  const cookie = event.node.req.headers.cookie
+  if (!cookie) { return }
 
-    let deviceType = ''
+  const match = cookie.match(/viewport=([^;]+)/)
+  return match?.[1]
+}
 
-    // Detect the device by headers.
-    if (input.headers) {
-      // Amazon CloudFront.
-      if (userAgent === 'Amazon CloudFront') {
-        const types: Record<string, string> = {
-          'cloudfront-is-android-viewer': 'mobile',
-          'cloudfront-is-desktop-viewer': 'desktop',
-          'cloudfront-is-ios-viewer': 'mobile',
-          'cloudfront-is-mobile-viewer': 'mobile',
-          'cloudfront-is-smarttv-viewer': 'tv',
-          'cloudfront-is-tablet-viewer': 'tablet',
-        }
+export function getViewportFromClientHints(event: H3Event, options?: boolean | ClientHintsOptions) {
+  if (!options) { return }
 
-        for (const key in types) {
-          if (input.headers[key] === 'true') {
-            deviceType = types[key]
-            break
-          }
-        }
+  const headers = event.node.req.headers
 
-        // Cloudflare.
-      }
-      else if (input.headers['cf-device-type']) {
-        deviceType = input.headers['cf-device-type'] as string
+  // 1. Mobile hint (primary signal)
+  const mobile = headers['sec-ch-ua-mobile']
+  if (typeof mobile === 'string') {
+    if (mobile.includes('?1')) { return 'mobile' }
+    if (mobile.includes('?0')) { return 'desktop' }
+  }
+
+  // 2. Viewport width hint (optional)
+  const opts = typeof options === 'object' ? options : {}
+  if (opts.viewportWidth) {
+    const width = headers['sec-ch-viewport-width']
+    if (typeof width === 'string') {
+      const parsed = parseInt(width, 10)
+      if (!isNaN(parsed)) {
+        return parsed < 768 ? 'mobile' : 'desktop'
       }
     }
-
-    // Detect the device by User-Agent.
-    if (!deviceType) {
-      // Import bowser chunk.
-      const { default: Bowser } = await import(/* webpackChunkName: "bowser" */ 'bowser')
-      const parser = Bowser.getParser(userAgent)
-
-      deviceType = parser.getPlatformType()
-    }
-
-    // If deviceType is included in the defaultBreakpoints, than use it.
-    if (deviceType in options.defaultBreakpoints) {
-      return options.defaultBreakpoints[deviceType]
-    }
-
-    return options.fallbackBreakpoint
-  }
-  catch (error) {
-    console.error(error)
-    return options.fallbackBreakpoint
   }
 }
 
-export function extendOptions(
-  options: Partial<ViewportOptions> = {},
-  extendFrom: ViewportOptions = DEFAULT_OPTIONS,
-): ViewportOptions {
-  return {
-    ...extendFrom,
-    ...options,
+export function getViewportFromHeaders(event: H3Event) {
+  const headers = event.node.req.headers
 
-    cookie: {
-      ...extendFrom.cookie,
-      ...options.cookie,
-    },
+  // CloudFront headers
+  const cf = headers['cloudfront-is-mobile-viewer']
+  if (cf === 'true') { return 'mobile' }
+  if (cf === 'false') { return 'desktop' }
+
+  // Cloudflare headers
+  const cfd = headers['cf-device-type']
+  if (typeof cfd === 'string') {
+    if (cfd === 'mobile') { return 'mobile' }
+    if (cfd === 'desktop') { return 'desktop' }
+    if (cfd === 'tablet') { return 'tablet' }
   }
 }
 
-export function parseCookie(input: string): Record<string, string> {
-  if (!input.length) {
-    return {}
-  }
+export function getViewportFromUserAgent(event: H3Event) {
+  const ua = event.node.req.headers['user-agent']
+  if (!ua) { return }
 
-  return Object.fromEntries(input.split(/; */).map(cookie => cookie.split('=', 2)))
+  const parser = Bowser.getParser(ua)
+  const platform = parser.getPlatformType(true)
+
+  if (platform === 'mobile') { return 'mobile' }
+  if (platform === 'tablet') { return 'tablet' }
+  return 'desktop'
+}
+
+export function resolveViewport(event: H3Event, options: ViewportOptions = {}) {
+  // PRIORITY (as described in the issue):
+  // cookie → client hints → CDN headers → user agent → fallback
+
+  const fromCookie = options.cookie !== false && getViewportFromCookie(event)
+  if (fromCookie) { return fromCookie }
+
+  const fromCH = getViewportFromClientHints(event, options.clientHints)
+  if (fromCH) { return fromCH }
+
+  const fromHeaders = getViewportFromHeaders(event)
+  if (fromHeaders) { return fromHeaders }
+
+  const fromUA = getViewportFromUserAgent(event)
+  if (fromUA) { return fromUA }
+
+  return options.fallback || 'desktop'
 }
