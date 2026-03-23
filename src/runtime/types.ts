@@ -24,6 +24,14 @@ export type ViewportOptions = {
   breakpoints: Record<string, number>
 
   /**
+   * Enable HTTP Client Hints for improved cold-start detection.
+   *
+   * When `true`, uses `Sec-CH-UA-Mobile` (sent by default on Chromium).
+   * Pass an object to also request `Sec-CH-Viewport-Width` for pixel-accurate detection.
+   */
+  clientHints?: boolean | ClientHintsOptions
+
+  /**
    * Cookie options.
    */
   cookie: ViewportCookie
@@ -82,6 +90,21 @@ declare module 'vue-router' {
   interface RouteMeta {
     viewport?: Partial<ViewportOptions>
   }
+}
+
+/**
+ * Client Hints options.
+ */
+export type ClientHintsOptions = {
+  /**
+   * Set Critical-CH header so the browser retries the request with hints if missing.
+   */
+  critical?: boolean
+
+  /**
+   * Request Sec-CH-Viewport-Width from the browser via Accept-CH response header.
+   */
+  viewportWidth?: boolean
 }
 
 interface PluginInjection {

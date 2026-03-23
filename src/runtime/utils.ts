@@ -22,6 +22,35 @@ export async function detectBreakpoint(options: ViewportOptions, input: Partial<
 
     let deviceType = ''
 
+    // Detect the device by Client Hints.
+    if (options.clientHints && input.headers) {
+      const hintsOptions = typeof options.clientHints === 'object' ? options.clientHints : {}
+
+      // Sec-CH-Viewport-Width gives pixel-accurate detection.
+      if (hintsOptions.viewportWidth) {
+        const viewportWidth = input.headers['sec-ch-viewport-width']
+
+        if (viewportWidth) {
+          const width = Number(viewportWidth)
+
+          if (!Number.isNaN(width) && width > 0) {
+            const breakpoint = resolveBreakpointFromWidth(options, width)
+
+            if (breakpoint) {
+              return breakpoint
+            }
+          }
+        }
+      }
+
+      // Sec-CH-UA-Mobile is sent by default on Chromium (no Accept-CH needed).
+      const uaMobile = input.headers['sec-ch-ua-mobile']
+
+      if (uaMobile === '?1' && 'mobile' in options.defaultBreakpoints) {
+        return options.defaultBreakpoints.mobile
+      }
+    }
+
     // Detect the device by headers.
     if (input.headers) {
       // Amazon CloudFront.
@@ -92,4 +121,33 @@ export function parseCookie(input: string): Record<string, string> {
   }
 
   return Object.fromEntries(input.split(/; */).map(cookie => cookie.split('=', 2)))
+}
+
+export function resolveBreakpointFromWidth(options: ViewportOptions, width: number): string | undefined {
+  const entries = Object.entries(options.breakpoints).sort((a, b) => a[1] - b[1])
+
+  if (!entries.length) {
+    return undefined
+  }
+
+  if (options.feature === 'minWidth') {
+    // Find the largest breakpoint value <= width (first breakpoint catches anything >= 1px)
+    if (width >= 1) {
+      for (let i = entries.length - 1; i >= 0; i--) {
+        if (width >= entries[i][1] || i === 0) {
+          return entries[i][0]
+        }
+      }
+    }
+  }
+  else {
+    // Find the smallest breakpoint value >= width
+    for (const [name, size] of entries) {
+      if (width <= size) {
+        return name
+      }
+    }
+  }
+
+  return undefined
 }
