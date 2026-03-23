@@ -9,6 +9,15 @@ export type DetectBreakpointInput = {
   headers: IncomingHttpHeaders
 }
 
+const AMAZON_CLOUDFRONT_UA_TYPES: Record<string, string> = {
+  'cloudfront-is-android-viewer': 'mobile',
+  'cloudfront-is-desktop-viewer': 'desktop',
+  'cloudfront-is-ios-viewer': 'mobile',
+  'cloudfront-is-mobile-viewer': 'mobile',
+  'cloudfront-is-smarttv-viewer': 'tv',
+  'cloudfront-is-tablet-viewer': 'tablet',
+}
+
 export async function detectBreakpoint(options: ViewportOptions, input: Partial<DetectBreakpointInput>) {
   try {
     if (input.cookie && input.cookie in options.breakpoints) {
@@ -24,29 +33,7 @@ export async function detectBreakpoint(options: ViewportOptions, input: Partial<
 
     // Detect the device by headers.
     if (input.headers) {
-      // Amazon CloudFront.
-      if (userAgent === 'Amazon CloudFront') {
-        const types: Record<string, string> = {
-          'cloudfront-is-android-viewer': 'mobile',
-          'cloudfront-is-desktop-viewer': 'desktop',
-          'cloudfront-is-ios-viewer': 'mobile',
-          'cloudfront-is-mobile-viewer': 'mobile',
-          'cloudfront-is-smarttv-viewer': 'tv',
-          'cloudfront-is-tablet-viewer': 'tablet',
-        }
-
-        for (const key in types) {
-          if (input.headers[key] === 'true') {
-            deviceType = types[key]
-            break
-          }
-        }
-
-        // Cloudflare.
-      }
-      else if (input.headers['cf-device-type']) {
-        deviceType = input.headers['cf-device-type'] as string
-      }
+      deviceType = getDeviceTypeFromHeaders(input.headers, userAgent)
     }
 
     // Detect the device by User-Agent.
@@ -92,4 +79,32 @@ export function parseCookie(input: string): Record<string, string> {
   }
 
   return Object.fromEntries(input.split(/; */).map(cookie => cookie.split('=', 2)))
+}
+
+function getDeviceTypeFromHeaders(headers: IncomingHttpHeaders, userAgent: string): string {
+  // Client hints mobile.
+  if (headers['sec-ch-ua-mobile'] === '?1') {
+    return 'mobile'
+  }
+
+  // Amazon CloudFront.
+  if (userAgent === 'Amazon CloudFront') {
+    for (const key in AMAZON_CLOUDFRONT_UA_TYPES) {
+      if (headers[key] === 'true') {
+        return AMAZON_CLOUDFRONT_UA_TYPES[key]
+      }
+    }
+  }
+
+  // Cloudflare mobile viewer.
+  if (headers['cloudfront-is-mobile-viewer'] === 'true') {
+    return 'mobile'
+  }
+
+  // Cloudflare device type.
+  if (headers['cf-device-type']) {
+    return headers['cf-device-type'] as string
+  }
+
+  return ''
 }
