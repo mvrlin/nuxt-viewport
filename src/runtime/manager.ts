@@ -40,6 +40,7 @@ export function createViewportManager(options: MaybeRefOrGetter<ViewportOptions>
       const nextSize = breakpoints[breakpointsKeys[i + 1]]
       const prevSize = breakpoints[breakpointsKeys[i - 1]]
 
+      // eslint-disable-next-line no-useless-assignment
       let mediaQuery = ''
 
       if (options.value.feature === 'minWidth') {
