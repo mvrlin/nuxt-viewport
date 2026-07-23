@@ -38,6 +38,11 @@ export default defineNuxtModule<ModuleOptions>({
       },
     }).dst
 
+    // Include CJS dependencies for optimization
+    nuxt.options.vite.optimizeDeps ||= {}
+    nuxt.options.vite.optimizeDeps.include ||= []
+    nuxt.options.vite.optimizeDeps.include.push('cookiejs')
+
     addPlugin(resolve(runtimeDir, 'plugin.client'))
     addPlugin(resolve(runtimeDir, 'plugin.server'))
 
